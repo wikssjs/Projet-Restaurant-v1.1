@@ -1,0 +1,428 @@
+html {
+	box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: inherit;
+}
+body {
+	background: rgb(242, 242, 242);
+}
+main {
+	/* margin: 20px; */
+	padding: 20px 0;
+	background: none;
+}
+.contenuPanier {
+	display: flex;
+	gap: 1%;
+	width: 100%;
+	justify-content: center;
+	position: relative;
+}
+.articles {
+	width: 70%;
+}
+.articl {
+	width: 100%;
+	background: white;
+	border-radius: 12px;
+	margin: 15px;
+}
+.articl h3,
+.payer h3 {
+	padding: 10px;
+	color: black;
+	font-size: 1.5rem;
+}
+.etoils {
+	padding: 10px 0;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.Note_client {
+	color: #000;
+	font-size: 1.4rem;
+	cursor: pointer;
+	margin-right: 30px;
+}
+.Note_client span {
+	position: relative;
+}
+.Note_client svg {
+	width: 45px;
+	position: absolute;
+	right: -40px;
+	top: -10px;
+}
+.Note_client:hover {
+	fill: orange;
+}
+
+.etoil-contenu {
+	color: orange;
+	font-size: 1.5rem;
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 50%;
+}
+.posi {
+	/* position: relative; */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 50%;
+}
+.etoil-contenu > h2 {
+	text-align: start;
+	margin: 0;
+	font-size: 1.5rem;
+	width: 100%;
+}
+.etoil {
+	position: absolute;
+	top: -5px;
+	left: 35px;
+}
+.commentaires {
+	background-color: aliceblue;
+	border-radius: 8px;
+	/* width: 100%; */
+	padding: 8px;
+	margin: 5px;
+	/* animation: slide 60s infinite; */
+
+	flex: 0 0 100%;
+	scroll-snap-align: start;
+	scroll-snap-stop: always;
+}
+@keyframes slide {
+	0% {
+		transform: translateX(0);
+	}
+	33.33% {
+		transform: translateX(-100%);
+	}
+	66.66% {
+		transform: translateX(-200%);
+	}
+	100% {
+		transform: translateX(-300%);
+	}
+}
+.overflow {
+	/* display: flex; */
+	/* overflow: scroll; */
+	/* justify-content: center; */
+	/* width: 400px; */
+	/* width: 100%; */
+
+	width: 50%;
+	overflow: hidden;
+	display: flex;
+	overflow: auto;
+	scroll-snap-type: x mandatory;
+	padding: 10px;
+	gap: 12px;
+	scroll-padding: 10px;
+}
+.commentaires h3 {
+	padding: 0;
+	font-size: 1.1rem;
+	margin-bottom: 10px;
+}
+.etoil-client-contenu {
+	color: orange;
+	font-size: 1.1rem;
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 50%;
+}
+.etoil-client {
+	position: absolute;
+	top: -12px;
+	left: 0px;
+}
+.commente {
+	color: #000;
+	margin-top: 13px;
+}
+.commentaires > p {
+	text-align: end;
+	color: orange;
+}
+.info {
+	display: flex;
+	flex-direction: column;
+	padding: 10px;
+}
+.info > img {
+	width: 100%;
+	height: 450px;
+	border-radius: 8px;
+	margin-right: 20px;
+}
+.description {
+	color: black;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+	padding: 10px 0;
+}
+p.description {
+	padding: 10px;
+}
+.descripHaut {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+}
+.descripHaut p {
+	width: 100%;
+	font-size: 1.3rem;
+}
+.descripBas {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+}
+.volum {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 10px;
+	border: 1px solid black;
+	padding: 5px;
+	border-radius: 5px;
+	color: black;
+	margin-top: 5px;
+}
+.volum img {
+	width: 30px;
+	height: 30px;
+}
+
+.payer {
+	margin: 15px;
+	background-color: white;
+	border-radius: 12px;
+	display: flex;
+	flex-direction: column;
+	padding: 10px;
+	min-width: 28%;
+	height: 100%;
+	position: sticky;
+	top: 140px;
+}
+
+.logoPaye {
+	display: flex;
+	justify-content: space-between;
+	gap: 10px;
+	padding: 10px;
+}
+.modePaye h4 {
+	padding: 10px;
+	color: black;
+	font-size: 1.3rem;
+	/* border-bottom: 1px solid; */
+}
+.calcul {
+	display: flex;
+	flex-direction: column;
+}
+
+.fraisLivre {
+	display: flex;
+	justify-content: space-between;
+	font-size: 1.2rem;
+	padding: 10px;
+}
+.calcul h4 {
+	padding: 10px;
+	color: black;
+}
+button.Payer {
+	width: 100%;
+	font-size: 1rem;
+	padding: 5px;
+	border: none;
+	border-radius: 12px;
+	background-color: orange;
+	cursor: pointer;
+}
+button.Payer:hover {
+	color: white;
+	background-color: green;
+}
+.Payer.supp {
+	display: none;
+}
+.quantiteMoin,
+.quantitePlus,
+.btnSupprimer:active {
+	cursor: pointer;
+	transform: scale(0.89);
+	transition: all 0.3s;
+}
+.quantiteMoin:active,
+.quantitePlus:active {
+	transform: scale(0.7);
+	transition: all 0.3s;
+}
+.commentaire {
+	width: 100%;
+	border-bottom: 1px solid #000;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.commentaire span {
+	position: relative;
+}
+.commentaire svg {
+	width: 45px;
+	position: absolute;
+	right: -40px;
+	top: -22px;
+}
+.commentaire:hover {
+	fill: orange;
+	color: orange;
+}
+.form {
+	/* margin-top: 10px; */
+	background-color: white;
+	padding: 10px;
+	display: none;
+	border: solid 1px black;
+	text-align: center;
+}
+/* form h3 {
+	color: #000;
+	font-size: 1.5rem;
+	margin: 20px 0;
+} */
+.activeForm {
+	display: block;
+	transition: all 1s;
+}
+
+.id_menu {
+	display: none;
+}
+.form input,
+textarea {
+	width: 100%;
+	padding: 10px;
+	height: 35px;
+	outline: none;
+	text-align: start;
+}
+.form label {
+	position: relative;
+}
+.form label p {
+	position: absolute;
+	color: rgba(0, 0, 0, 0.797);
+	top: 0;
+	transition: all 0.5s;
+	left: 10px;
+}
+.form input {
+	margin: 10px 0;
+}
+.form > p {
+	text-align: start;
+}
+.erreur {
+	color: red;
+}
+.hidden {
+	display: none;
+}
+.form input[type='submit'] {
+	text-align: center;
+}
+.form input:focus ~ p,
+.form .commentaireClient:focus ~ p,
+.form input:valid ~ p {
+	background-color: white;
+	padding: 0 5px;
+	transform: translateY(-18px);
+	transition: all 0.5s;
+}
+.contenu_form_note {
+	justify-content: flex-end;
+	display: none;
+}
+.activeFormNote {
+	display: flex;
+	transition: all 1s;
+}
+.form_note {
+	width: 100%;
+	border: #000 solid 1px;
+	padding: 10px;
+}
+.form_note label {
+	position: relative;
+}
+.form_note label p {
+	position: absolute;
+	top: 0;
+	left: 7px;
+	color: rgba(0, 0, 0, 0.526);
+	transition: all 0.5s;
+}
+.form_note input[type='number'] {
+	width: 100%;
+	padding: 7px;
+	outline: none;
+	margin: 20px 0 0 0;
+	text-align: start;
+}
+.form_note input[type='number']:valid ~ p,
+.form_note input[type='number']:focus ~ p {
+	padding: 0 5px;
+	transition: all 0.5s;
+	transform: translateY(-16px);
+	background-color: white;
+}
+.form_note input[type='submit'] {
+	width: 50px;
+	padding: 5px 10px;
+	width: 100%;
+	margin: 15px 0;
+	text-align: center;
+	/* background-color: orange;
+	border: none;
+	color: white; */
+}
+@media (max-width: 710px) {
+	.contenuPanier {
+		flex-direction: column;
+		transition: all 0.5s;
+	}
+	.articles {
+		width: 95%;
+		transition: all 0.5s;
+	}
+}
+@media (max-width: 455px) {
+	.articles {
+		width: 95%;
+		transition: all 0.5s;
+	}
+}

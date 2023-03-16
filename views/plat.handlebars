@@ -1,0 +1,119 @@
+<div class='contenuPanier'>
+	<div class='articles'>
+		
+			<div class='articl'>
+				<div class='info'>
+					{{#each menu}}
+					<img src={{this.image_url}} alt='image du plat' />
+					{{/each}}
+					<div class="etoils">
+						<div class="etoil-contenu">
+							<h2>{{afficheEtoil moyenneEtoilNum}}</h2>
+							<div class="posi">
+								<div class="etoil etoil_vide"> ☆ ☆ ☆ ☆ ☆</div>
+								<div class="etoil etoil_plain">
+								{{#each moyenneEtoil}}
+									★
+								{{/each}}</div>
+							</div>
+						</div>
+						<div class="Note_client">Donner une note 
+							<span>
+								<svg class="bas" clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m16.843 10.211c.108-.141.157-.3.157-.456 0-.389-.306-.755-.749-.755h-8.501c-.445 0-.75.367-.75.755 0 .157.05.316.159.457 1.203 1.554 3.252 4.199 4.258 5.498.142.184.36.29.592.29.23 0 .449-.107.591-.291zm-7.564.289h5.446l-2.718 3.522z" fill-rule="nonzero"/></svg>
+								
+							</span>
+						</div>
+						
+					</div>
+					{{#each menu}}
+					<div class="contenu_form_note">
+						<form action="/ajoute-note" class="form_note" novalidate id="form_note" data-idmenu={{this.id_menu}}>
+							<label for="Note">
+								<input type="number" name="note" id="Note" min="1" max="5" required>
+								<p>Note</p>
+							</label>
+							<p class="erreur" id="erreur_note"></p>
+							<input type="submit" value="OK" id="submit-note" >
+						</form>
+					</div>
+					{{/each}}
+					<div class="overflow">
+						{{#each getCommentaireParPlat}}
+						<div class="commentaires">
+							<h3>{{this.nom_commentataire}}</h3>
+							<div class="etoil-client-contenu">
+								<div class="etoil-client etoil_vide">☆☆☆☆☆</div>
+								<div class="etoil-client etoil_plain">★★★★</div>
+							</div>
+							<div class="commente">
+								{{this.commentaire}}
+							</div>
+							<p>{{this.created_at}}</p>
+						</div>
+						{{/each}}
+						
+
+					</div>
+				</div>
+				
+			</div>
+		
+	</div>
+
+	<div class='payer'>
+		{{#each menu}}
+			<h3>{{this.nom}}</h3>
+			<p class="description">{{this.description}}</p>
+			<div class='calcul'>
+				<h4>{{this.prix}} $</h4>
+				<div class='fraisLivre'>
+					<p>Frais de livraison</p>
+					<p>5 $</p>
+				</div>
+
+			</div>
+
+			<div class='modePaye'>
+				<h4>Quantité</h4>
+				<div class='logoPaye'>
+					<div class='volum'>
+						<img data-id_menu={{this.id_menu}} class='quantiteMoin' src='/images/moin.png' alt='icon moin' />
+						<div class='nombre'>{{this.quantite}}</div>
+						<img data-id_menu={{this.id_menu}} class='quantitePlus' src='/images/plus.png' alt='icon plus' />
+					</div>
+					<button class='Payer {{#if this.estAjoute}}supp{{/if}}' data-idPlat={{this.id_menu}}>AJOUTER AU PANIER</button>
+				</div>
+				
+				<h4 class="commentaire">
+					<img src="/images/comment.svg" alt="icon commentaire"> 
+					{{!-- <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M12 1c-6.338 0-12 4.226-12 10.007 0 2.05.739 4.063 2.047 5.625l-1.993 6.368 6.946-3c1.705.439 3.334.641 4.864.641 7.174 0 12.136-4.439 12.136-9.634 0-5.812-5.701-10.007-12-10.007zm0 1c6.065 0 11 4.041 11 9.007 0 4.922-4.787 8.634-11.136 8.634-1.881 0-3.401-.299-4.946-.695l-5.258 2.271 1.505-4.808c-1.308-1.564-2.165-3.128-2.165-5.402 0-4.966 4.935-9.007 11-9.007zm-5 7.5c.828 0 1.5.672 1.5 1.5s-.672 1.5-1.5 1.5-1.5-.672-1.5-1.5.672-1.5 1.5-1.5zm5 0c.828 0 1.5.672 1.5 1.5s-.672 1.5-1.5 1.5-1.5-.672-1.5-1.5.672-1.5 1.5-1.5zm5 0c.828 0 1.5.672 1.5 1.5s-.672 1.5-1.5 1.5-1.5-.672-1.5-1.5.672-1.5 1.5-1.5z"/></svg> --}}
+					Faire un Commentaire
+					<span>
+						<svg class="icon_bas_comment" clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m16.843 10.211c.108-.141.157-.3.157-.456 0-.389-.306-.755-.749-.755h-8.501c-.445 0-.75.367-.75.755 0 .157.05.316.159.457 1.203 1.554 3.252 4.199 4.258 5.498.142.184.36.29.592.29.23 0 .449-.107.591-.291zm-7.564.289h5.446l-2.718 3.522z" fill-rule="nonzero"/></svg>
+					</span>
+				</h4>
+				
+				<form action="/commentaire" method="post" class="form" id="form_commentaire" novalidate data-idmenu={{this.id_menu}}>
+						<h3>Votre Commentaire</h3>
+						<label for="nomCommantataire">
+							<input type="text" name="nom_commentataire" id="nomCommantataire" required >
+							<p>Nom</p>
+						</label>
+						<p class="erreur" id="erreur_nom_commentataire"></p>
+						<label for="emailCommantataire">
+							<input type="email" name="email" id="emailCommantataire" required >
+							<p>Email</p>
+						</label>
+						<p class="erreur" id="erreur_email_commentataire"></p>
+						<label for="commentaireClient">
+							<textarea name="commentaire" class="commentaireClient"  id="commentaireClient" placeholder="Commentaire..." required  ></textarea>
+						</label>
+						<p class="erreur" id="erreur_commentaire"></p>
+
+						<input id="btn_commentaire" type="submit" value="Envoyer" >
+				</form>
+				
+			</div>
+		{{/each}}
+	</div>
+</div>

@@ -1,0 +1,103 @@
+body {
+	margin: 0;
+}
+main {
+	padding: 0;
+}
+section {
+	background-image: url(/images/img_plats/img-form.jpg);
+	background-size: cover;
+	box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.8);
+	width: 100vw;
+	height: 100vh;
+	background-position: unset;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: black;
+}
+form > img {
+	position: absolute;
+
+	width: 100px;
+	top: -25px;
+	left: -25px;
+}
+form {
+	background-color: white;
+	padding: 25px 15px;
+	box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.8);
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+}
+form h2 {
+	color: white;
+	text-shadow: 2px 2px 4px #000000;
+	font-size: 2rem;
+	margin: 10px 0;
+}
+
+form input {
+	width: 300px;
+	padding: 5px;
+	height: 30px;
+	outline: none;
+	border: 1px solid rgba(0, 0, 0, 0.671);
+	color: rgba(0, 0, 0, 0.671);
+	font-size: 1.1rem;
+	background: none;
+}
+form label {
+	position: relative;
+	margin: 5px;
+}
+form label p {
+	position: absolute;
+	color: rgba(0, 0, 0, 0.563);
+	top: 4px;
+	left: 8px;
+	transition: all 0.5s;
+	font-size: 1.1rem;
+}
+form > div {
+	width: 97%;
+}
+form input {
+	margin: 10px 0;
+}
+input[type='submit'] {
+	color: white;
+	background: #fb911f;
+	height: 40px;
+	font-size: 1.3rem;
+	width: 100%;
+	border: none;
+	border-radius: 5px;
+}
+input[type='submit']:hover {
+	background: rgba(0, 128, 0, 0.798);
+	transform: scale(0.995);
+	transition: all 0.4s;
+}
+
+form input:focus ~ p,
+form input:valid ~ p {
+	background-color: white;
+	padding: 0 5px;
+	color: green;
+	transform: translateY(-24px);
+	transition: all 0.5s;
+}
+
+.hidden {
+	display: none;
+}
+
+.erreur {
+	margin-top: 5px;
+	transition: 0.5s;
+	color: #aa1703;
+}

@@ -1,0 +1,178 @@
+html {
+	box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: inherit;
+}
+body {
+	background: rgb(242, 242, 242);
+}
+main {
+	/* margin: 20px; */
+	padding: 20px 0;
+	background: none;
+}
+.contenuPanier {
+	display: flex;
+	gap: 2%;
+	width: 100%;
+	justify-content: center;
+	position: relative;
+}
+.articles {
+	width: 60%;
+}
+.articl {
+	width: 100%;
+	background: white;
+	border-radius: 12px;
+	margin: 15px;
+}
+.articl h3,
+.payer h3 {
+	padding: 10px;
+	color: black;
+	font-size: 1.5rem;
+}
+.info {
+	display: flex;
+	justify-content: space-between;
+	padding: 10px;
+}
+.info > a img {
+	width: 250px;
+	height: 200px;
+	margin-right: 20px;
+}
+.description {
+	color: black;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+}
+.description img {
+	width: 22px;
+	height: 22px;
+	cursor: pointer;
+}
+.descripHaut {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.descripHaut p {
+	width: 80%;
+}
+.descripBas {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+}
+.volum {
+	display: flex;
+	gap: 10px;
+}
+.volum img {
+	border: solid 1px;
+	border-radius: 50%;
+}
+
+.payer {
+	margin: 15px;
+	background-color: white;
+	border-radius: 12px;
+	display: flex;
+	flex-direction: column;
+	padding: 10px;
+	min-width: 28%;
+	height: 360px;
+	position: sticky;
+	top: 140px;
+}
+.modePaye img {
+	width: 70px;
+	margin-top: 10px;
+	cursor: pointer;
+}
+.logoPaye {
+	display: flex;
+	justify-content: space-between;
+}
+.modePaye h4 {
+	padding: 10px;
+	color: black;
+	font-size: 1.5rem;
+	border-bottom: 1px solid;
+}
+.calcul {
+	display: flex;
+	flex-direction: column;
+}
+.articleP,
+.fraisLivre,
+.total {
+	display: flex;
+	justify-content: space-between;
+	font-size: 1.3rem;
+}
+.total {
+	font-weight: bold;
+}
+.calcul p {
+	padding: 10px 0;
+}
+button.PayerT {
+	font-size: 1.5rem;
+	padding: 5px;
+	border: none;
+	border-radius: 12px;
+	background-color: orange;
+	cursor: pointer;
+}
+button.PayerT a {
+	width: 100%;
+	text-decoration: none;
+	color: black;
+}
+button.PayerT a:hover {
+	color: white;
+}
+.quantiteMoin,
+.quantitePlus,
+.btnSupprimer:active {
+	transform: scale(0.89);
+	transition: all 0.3s;
+}
+.quantiteMoin:active,
+.quantitePlus:active {
+	transform: scale(0.7);
+	transition: all 0.3s;
+}
+@media (max-width: 710px) {
+	.contenuPanier {
+		flex-direction: column;
+		transition: all 0.5s;
+	}
+	.articles {
+		width: 95%;
+		transition: all 0.5s;
+	}
+}
+@media (max-width: 455px) {
+	/* .contenuPanier {
+		flex-direction: column;
+	} */
+	.articles {
+		width: 95%;
+		transition: all 0.5s;
+	}
+	.info > img {
+		width: 200px;
+		height: 150px;
+		transition: all 0.5s;
+	}
+}

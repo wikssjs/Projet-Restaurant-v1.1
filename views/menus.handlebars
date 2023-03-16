@@ -1,0 +1,46 @@
+<div class="contenuAdmin">
+    
+    {{>admin_navigation}}
+    <div class='tableaux'>
+        <div class="titreComm">
+            <h1 >Menus</h1>
+        </div>
+
+        <div class="tableau">
+            <div class="titre">
+                <h3>ID</h3>
+                <h3>Nom</h3>
+                <h3>Prix</h3>
+                <h3>Source</h3>
+                <h3>Description</h3>
+                <h3>Date</h3>
+                <h3>Action</h3>
+            </div>
+            {{#each menus}}
+            <div class="contenuTable">
+                <p>{{this.id_menu}}</p>
+                <p>{{this.nom}}</p>
+                <p>{{this.prix}} $</p>
+                <p>{{this.image_url}}</p>
+                <p>{{this.description}}</p>
+                <p>{{this.created_at}}</p>
+                <button class="btn_supprimer" data-idplat={{this.id_menu}}>supprimer</button>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+    <div class='form'>
+        <h2>Ajouter un plat</h2>
+        <form action='/ajouterUnPlat' method="post">
+            <input type='text' id='nom' name="nom" placeholder='Nom' required/>
+
+            <input type="file" name="image_url" accept="image/*" required>
+
+            <textarea name="description" id="description" placeholder="Description" required></textarea>
+            
+            <input type='number' id='prix' min="0" name="prix" placeholder='Prix' minlength="0" required />
+
+            <input type='submit' value='Ajouter' />
+        </form>
+    </div>
+</div>

@@ -1,0 +1,26 @@
+<section>
+	<form action='/' method='post' novalidate id='form-auth'>
+		<img src='/images/veraaLogo.png' alt='logo vera pasta' />
+		<h2>Connexion</h2>
+		<label class='label' for='input-courriel-utilisateur'>
+			<input class='input' type='email' id='input-courriel-utilisateur' pattern='^(.+)@(.+)$' required />
+			<img class='user' src='/images/user.png' alt='icon' />
+			<p>Email</p>
+		</label>
+		<div id='erreur-courriel' class='erreur hidden'></div>
+		<label class='label' for='input-mot-de-passe'>
+			<input class='input' type='password' id='input-mot-de-passe' required />
+			<img class='password' src='./images/password.png' alt='icon' />
+			<p>Password</p>
+		</label>
+		<div id='erreur-Mot-de-passe' class='erreur hidden'></div>
+		<label for='checkbox' class='remember'>
+			<input type='checkbox' id='checkbox' />
+			Se Souvenir du mot de passe
+		</label>
+		<input type='submit' value='Se Connecter' />
+		<p><a href='#'>Mot de passe oublié?</a></p>
+		<p><a href='/inscription'>Besoin d'un compte?</a></p>
+	</form>
+
+</section>

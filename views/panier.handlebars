@@ -1,0 +1,58 @@
+<div class='contenuPanier'>
+	<div class='articles'>
+		{{#each plats}}
+			<div class='articl'>
+				<h3>{{this.nom}}</h3>
+				<div class='info'>
+					<a href='/plat/{{this.id_menu}}'>
+						<img src={{this.image_url}} alt='image du plat' />
+					</a>
+					<div class='description'>
+						<div class='descripHaut'>
+							<p>{{this.description}}</p>
+							<img data-idPlat={{this.id_menu}} class='btnSupprimer' src='/images/poubel.png' alt='icon supprimer' />
+						</div>
+						<div class='descripBas'>
+							<p>C$ {{this.prix}}</p>
+							<div class='volum'>
+								<img data-id_menu={{this.id_menu}} class='quantiteMoin' src='/images/moin.png' alt='icon moin' />
+								<div class='nombre'>{{this.quantite}}</div>
+								<img data-id_menu={{this.id_menu}} class='quantitePlus' src='/images/plus.png' alt='icon plus' />
+							</div>
+						</div>
+
+					</div>
+				</div>
+
+			</div>
+		{{/each}}
+	</div>
+	<div class='payer'>
+		<h3>Résumé</h3>
+		<div class='calcul'>
+			<div class='articleP'>
+				<p>Artiles</p>
+				<p id='sommeArticle'>C$ {{afficheArgent sommeArticleClient}}</p>
+			</div>
+			<div class='fraisLivre'>
+				<p>Frais de livraison</p>
+				<p>C$ 5</p>
+			</div>
+			<div class='total'>
+				<p>Total</p>
+				<p>C$ {{sommeArticleClientPlusLivraison}}</p>
+			</div>
+		</div>
+		{{#if sommeArticleClient}}
+			<button class='PayerT'><a href='/informations'>Payer(<pan>{{quantiteArticleClient}}</pan>)</a></button>
+		{{/if}}
+		<div class='modePaye'>
+			<h4>Modes de paiement</h4>
+			<div class='logoPaye'>
+				<img src='/images/paypal.png' alt='logo Mode de payement' />
+				<img src='/images/visa.svg' alt='logo Mode de payement' />
+				<img src='/images/mastercard.svg' alt='logo Mode de payement' />
+			</div>
+		</div>
+	</div>
+</div>

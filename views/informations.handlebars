@@ -1,0 +1,107 @@
+<div class='contenu-paiement'>
+	<div class='divGauche'>
+		<div class='vera'>
+			<img src='/images/veraaLogo.png' alt='logo veraPasta' />
+			<h1>VeraPasta</h1>
+		</div>
+		<div class='cordonnee'>
+			<form action='/information' id='form_infos' method='post' novalidate>
+				<h2>Adresse d’expédition</h2>
+				<label>
+					<p>Pays/Région</p>
+					<select name='Pays' id='Pays'>
+						<option>Canada</option>
+						<option>Amerique</option>
+					</select>
+
+				</label>
+				{{! <p>Le champ pays est requis</p> }}
+				<label for='Adresse'>
+					<input type='text' name='Adresse' id='Adresse' placeholder='Adresse' required />
+				</label>
+				<p class='erreur hidden' id='erreurAdresse'></p>
+				<label for='Appartement'>
+					<input type='text' name='Appartement' id='Appartement' placeholder='Appartement, suite, etc. optionnel' />
+				</label>
+				{{! <p>Le champ pays est requis</p> }}
+				<div class='potat-ville'>
+					<div>
+						<label for='postalCode'>
+							<input type='text' name='postalCode' id='postalCode' placeholder='Code postal' required />
+						</label>
+						<p class='erreur hidden' id='erreurPostalCode'></p>
+					</div>
+					<div>
+						<label for='ville'>
+							<select id='ville' name='ville'>
+								<option>Montréal</option>
+								<option>Ottawa</option>
+								<option>Gatineau</option>
+								{{! <option value=''>Ottawa</option> }}
+							</select>
+						</label>
+					</div>
+				</div>
+
+				<label for='Téléphone'>
+					<input type='number' name='telephone' id='Téléphone' placeholder='Téléphone' required />
+				</label>
+				<p class='erreur hidden' id='erreurTelephone'></p>
+				<div class='basform'>
+					<a href='/panier'>
+						<div class='retour'>
+							<svg
+								clip-rule='evenodd'
+								fill-rule='evenodd'
+								stroke-linejoin='round'
+								stroke-miterlimit='2'
+								viewBox='0 0 24 24'
+								xmlns='http://www.w3.org/2000/svg'
+							><path
+									d='m13.789 7.155c.141-.108.3-.157.456-.157.389 0 .755.306.755.749v8.501c0 .445-.367.75-.755.75-.157 0-.316-.05-.457-.159-1.554-1.203-4.199-3.252-5.498-4.258-.184-.142-.29-.36-.29-.592 0-.23.107-.449.291-.591zm-.289 7.563v-5.446l-3.522 2.719z'
+									fill-rule='nonzero'
+								></path></svg>
+							<p>Rétour</p>
+						</div>
+					</a>
+					<input type='submit' value="Continuer vers l'expédition" />
+				</div>
+
+			</form>
+
+		</div>
+	</div>
+	<div class='divDroite'>
+		<div class='sticky'>
+			{{#each plats}}
+				<div class='produitP'>
+					<div class='imgDescrip'>
+						<div>
+							<img src={{this.image_url}} alt='image plat' />
+							<p class='quantit'>{{this.quantite}}</p>
+							<div class='titreDescrip'>
+								<h3>{{this.nom}}</h3>
+								<p>{{this.description}}</p>
+							</div>
+						</div>
+						<h3>{{this.prix}}</h3>
+					</div>
+				</div>
+			{{/each}}
+		</div>
+		<div class='calculT'>
+			<div class='sousT'>
+				<p>Sous-total</p>
+				<h4>{{afficheArgent sommeArticleClient}} $</h4>
+			</div>
+			<div class='Livraison'>
+				<p>Livraison</p>
+				<h4>5 $</h4>
+			</div>
+			<div class='Total'>
+				<h4>Total</h4>
+				<h3>{{sommeArticleClientPlusLivraison}} $</h3>
+			</div>
+		</div>
+	</div>
+</div>

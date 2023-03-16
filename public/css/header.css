@@ -1,0 +1,312 @@
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+main p {
+	color: black;
+}
+header {
+	background-image: url(/images/header.jpeg);
+	background-size: cover;
+	height: 600px;
+}
+body {
+	color: white;
+}
+.nav {
+	padding: 0;
+	z-index: 2;
+	display: flex;
+	flex-direction: column;
+	padding-top: 10px;
+	position: relative;
+}
+.logo {
+	width: 80px;
+}
+
+.nav.toggleNav {
+	position: fixed;
+	top: 0;
+	width: 100%;
+	background-color: rgb(5, 91, 0);
+}
+
+.toggle {
+	position: absolute;
+	top: 0.9rem;
+	right: 1rem;
+	cursor: pointer;
+}
+.toggle .menu {
+	height: 2rem;
+}
+.toggle .close {
+	display: none;
+	height: 2.3em;
+	margin-right: 0.2rem;
+}
+.nav-checkbox {
+	display: none;
+}
+ul.menu {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	align-items: center;
+	width: 100vw;
+	padding-bottom: 10px;
+}
+
+.menu li.lien:hover {
+	color: darkgoldenrod;
+}
+
+.menu li {
+	display: none;
+	justify-content: center;
+	align-items: center;
+	margin-left: 2rem;
+	list-style: none;
+	font-size: 2rem;
+}
+.connexion {
+	background: #fb911f;
+	border: 1px solid darkgoldenrod;
+	border-radius: 8px;
+	padding: 5px 8px;
+}
+.connexion img {
+	width: 20px;
+}
+.connexion:hover {
+	background: none;
+	color: aliceblue;
+	border: 1px solid aliceblue;
+}
+
+.menu a {
+	color: inherit;
+	font-size: 1.2rem;
+	text-decoration: none;
+	width: 100%;
+	padding-top: 10px;
+}
+.containerPanier {
+	position: absolute;
+	top: 14px;
+	right: 180px;
+}
+
+/* .containerPanier:hover {
+	transform: rotate(10deg);
+	transition: all 0.4s;
+} */
+.quantite {
+	position: absolute;
+	top: -5px;
+	right: -3px;
+	color: white;
+	font-size: 1rem;
+	border-radius: 50%;
+	background-color: rgb(255, 71, 29);
+	height: 20px;
+	width: 22px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 50%;
+}
+.quantite p {
+	margin: 0;
+}
+.Panier {
+	width: 40px;
+	height: 40px;
+	fill: rgb(201, 199, 199);
+}
+.Panier:hover {
+	fill: #fb911f;
+}
+.Panier:active {
+	transform: scale(0.89);
+	transition: all 0.3s;
+}
+ul.menu {
+	display: flex;
+	justify-content: end;
+	align-items: center;
+	padding: 0 15px 15px 0;
+}
+#nav-checkbox:checked ~ ul.menu li {
+	display: flex;
+	padding: 7px 0;
+	margin-right: 32px;
+	border-top: rgb(111, 110, 110) solid 1px;
+	width: 100%;
+	text-align: center;
+	transition: all 0.2s;
+	z-index: 1;
+}
+#nav-checkbox:checked ~ ul.menu {
+	background-color: rgb(5, 91, 0);
+}
+#nav-checkbox:checked ~ ul.menu li:hover {
+	background-color: rgb(27, 165, 0);
+}
+#nav-checkbox:checked ~ label.toggle .close {
+	display: block;
+}
+#nav-checkbox:checked ~ label.toggle .menu {
+	display: none;
+}
+
+.search {
+	position: fixed;
+	right: 20px;
+	top: 15px;
+	z-index: 5;
+}
+#search {
+	outline: none;
+	color: white;
+	padding: 5px 20px 5px 20px;
+	background-color: rgba(51, 51, 51, 0.538);
+	border: none;
+	font-size: 1rem;
+	width: 150px;
+}
+#search::placeholder {
+	text-align: center;
+	color: white;
+}
+.search img {
+	position: absolute;
+	top: 9%;
+	right: 0px;
+	width: 26px;
+	cursor: pointer;
+	padding: 5px;
+}
+/* .searchUp {
+	z-index: 3;
+} */
+.search img :active {
+	transform: scale(0.4);
+}
+/* li.Reservation {
+	
+} */
+.descriptionHeader {
+	position: absolute;
+	top: 38%;
+	left: 30%;
+	max-width: 600px;
+}
+.descriptionHeader h1 {
+	font-size: 3rem;
+}
+.descriptionHeader span {
+	color: rgb(255, 115, 0);
+}
+.descriptionHeader p {
+	text-align: center;
+	font-size: 1.3rem;
+}
+.user {
+	position: relative;
+	margin: 0 10px 0 20px;
+	background: #fb911f;
+	border: 1px solid darkgoldenrod;
+	border-radius: 8px;
+	padding: 5px 8px;
+	/* font-size: 1.2rem; */
+	cursor: pointer;
+}
+.img_nom p {
+	font-size: 1.2rem;
+}
+.img_nom {
+	display: flex;
+	align-items: center;
+}
+.user:hover {
+	background: none;
+	color: aliceblue;
+	border: 1px solid aliceblue;
+}
+.user img {
+	width: 18px;
+	margin-right: 5px;
+}
+.menu_user {
+	display: flex;
+	flex-direction: column;
+	position: absolute;
+	right: -20px;
+	border-radius: 8px;
+	display: none;
+	padding: 0 8px 5px 8px;
+}
+.bacgroun {
+	background-color: rgb(5, 91, 0);
+}
+.menu_user a,
+input {
+	padding: 0;
+	text-align: center;
+	margin-bottom: 2px;
+	/* color: #fb911f; */
+}
+.menu_user input {
+	background: none;
+	border: none;
+	cursor: pointer;
+	font-size: 1rem;
+	color: white;
+}
+.menu_user a:hover,
+.menu_user input:hover {
+	color: #fb911f;
+}
+@media (max-width: 715px) {
+	.descriptionHeader {
+		top: 30%;
+		left: 20%;
+	}
+	.descriptionHeader h1 {
+		font-size: 2rem;
+	}
+	.descriptionHeader p {
+		font-size: 1rem;
+	}
+}
+@media (max-width: 1052px) {
+	.search {
+		right: 70px;
+		top: 17px;
+		z-index: 3;
+	}
+	.containerPanier {
+		position: absolute;
+		top: 14px;
+		right: 230px;
+	}
+}
+@media (min-width: 1052px) {
+	.toggle {
+		display: none;
+		transition: all 1s;
+	}
+	ul.menu {
+		flex-direction: row;
+		transition: all 1s;
+	}
+
+	.menu li {
+		transition: all 1s;
+		display: block;
+	}
+}

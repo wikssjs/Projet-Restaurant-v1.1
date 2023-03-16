@@ -1,0 +1,62 @@
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+footer {
+	background-color: rgb(5, 91, 0);
+	/* min-height: 230px; */
+	border-top: #333 solid 1px;
+	padding: 30px 10px 0 10px;
+}
+
+footer p {
+	text-align: center;
+	margin-top: 20px;
+	margin-bottom: 0;
+}
+
+.footer-container {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+}
+.retrouver-moi .social {
+	width: 25px;
+	margin-left: 20px;
+	margin-top: 20px;
+}
+.retrouver-moi h3 {
+	margin-left: 20px;
+}
+.Contact img {
+	width: 20px;
+}
+.Contact div {
+	display: flex;
+	gap: 10px;
+	align-items: center;
+	margin-top: 20px;
+}
+.liens-utiles a {
+	color: white;
+	text-decoration: none;
+	margin-top: 15px;
+}
+.liens-utiles {
+	display: flex;
+	flex-direction: column;
+}
+
+.profiles .social {
+	width: 35px;
+	margin: 10px;
+}
+.fleche {
+	position: fixed;
+	bottom: 50px;
+	right: 50px;
+}
+.fleche img {
+	width: 40px;
+}

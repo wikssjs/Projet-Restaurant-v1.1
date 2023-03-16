@@ -1,0 +1,222 @@
+.contenu-paiement {
+	display: flex;
+	/* padding: 20px; */
+}
+body {
+	margin: 0;
+}
+form {
+	display: flex;
+	flex-direction: column;
+}
+.divGauche {
+	width: 55%;
+
+	padding: 20px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+.divGauche > div {
+	width: 100%;
+}
+.vera {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+.vera h1 {
+	font-size: 3rem;
+	margin: 16px 0;
+	letter-spacing: 5px;
+	color: rgba(0, 128, 0, 0.683);
+}
+label p {
+	margin: 8px 0 0 0;
+}
+form > p {
+	margin: 0;
+}
+label {
+	margin: 2px 0 8px 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+input,
+select {
+	margin-bottom: 20px;
+	padding: 10px;
+	outline: none;
+}
+input {
+	width: 100%;
+}
+.basform {
+	display: flex;
+	justify-content: space-between;
+	gap: 10px;
+	margin-top: 20px;
+}
+.basform a {
+	text-decoration: none;
+	color: orange;
+}
+.basform a p {
+	width: 100px;
+}
+.potat-ville {
+	display: flex;
+	justify-content: space-between;
+	gap: 10px;
+	margin-top: 15px;
+}
+.potat-ville > div {
+	width: 47%;
+}
+input::placeholder:focus {
+	transform: translateY(-50%);
+}
+h2 {
+	margin-bottom: 0;
+}
+select {
+	width: 100%;
+}
+.basform {
+	display: flex;
+	justify-content: space-between;
+	margin-top: 20px;
+	gap: 10px;
+}
+.titreDescrip p {
+	height: 35px;
+	overflow: hidden;
+}
+address {
+	width: 100%;
+	border: rgba(0, 0, 0, 0.572) 1px solid;
+	padding: 10px;
+	font-size: 1.1em;
+	font-style: normal;
+}
+.retour {
+	display: flex;
+	width: 50%;
+	justify-content: center;
+	align-items: center;
+	color: orange;
+}
+.retour {
+	fill: orange;
+	cursor: pointer;
+}
+.retour svg {
+	width: 90px;
+}
+input[type='submit'] {
+	width: 50%;
+	background-color: rgba(255, 166, 0, 0.424);
+	border: none;
+	border-radius: 8px;
+	cursor: pointer;
+}
+.divDroite {
+	width: 40%;
+	padding: 50px 30px;
+	background-color: rgb(239, 239, 239);
+	display: flex;
+	flex-direction: column;
+}
+.produitP {
+	background-color: rgba(255, 255, 255, 0.793);
+	border-radius: 1rem;
+	padding: 10px;
+	margin: 10px 0;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	/* background-color: aquamarine; */
+}
+.sticky {
+	height: 300px;
+	overflow: scroll;
+}
+.titreDescrip {
+	padding: 5px;
+}
+.titreDescrip > h3,
+p {
+	margin: 0;
+}
+.produitP img {
+	width: 100px;
+	border: 2px white solid;
+	border-radius: 1rem;
+}
+.imgDescrip {
+	width: 100%;
+
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+
+	position: relative;
+}
+.imgDescrip > div {
+	display: flex;
+	gap: 10px;
+}
+.quantit {
+	position: absolute;
+	top: -5px;
+	left: 87px;
+	width: 22px;
+	height: 22px;
+	text-align: center;
+	border-radius: 50%;
+	background-color: rgba(67, 67, 67, 0.88);
+	color: white;
+	font-size: 1.1rem;
+	margin: 0;
+}
+.calculT {
+	display: flex;
+	flex-direction: column;
+	margin-top: 20px;
+}
+.calculT > div {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 10px;
+	margin: 10px 0;
+}
+.calculT h4 {
+	margin: 0;
+}
+.Total {
+	border-top: 1px solid #000;
+	border-bottom: 1px solid #000;
+}
+@media (max-width: 620px) {
+	.contenu-paiement {
+		flex-direction: column-reverse;
+		transition: all 0.8s;
+	}
+	.divGauche {
+		transition: all 0.8s;
+		width: 90%;
+	}
+	.divDroite {
+		transition: all 0.8s;
+		width: 90%;
+	}
+	.vera {
+		transition: all 0.8s;
+		display: none;
+	}
+}
