@@ -1,5 +1,7 @@
 import connectionPromise from './connexion.js';
-import { hash } from 'bcrypt';
+import pkg from 'bcryptjs';
+
+const { hash } = pkg;
 
 export const addClient = async (nom_client, prenom, password, email) => {
 	try {
