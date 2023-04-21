@@ -1,8 +1,9 @@
 import passport from 'passport';
 import { Strategy } from 'passport-local';
-import { compare } from 'bcrypt';
+import pkg from 'bcryptjs';
 import { getClientByEmail } from './model/requetes.js';
 
+const { compare } = pkg;
 let config = {
     usernameField: 'emailClient',
     passwordField: 'motDePasseClient'
