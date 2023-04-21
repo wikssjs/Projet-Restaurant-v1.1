@@ -3,8 +3,10 @@ let inpuNumero_carte = document.getElementById('numero-carte');
 let inputNom_carte = document.getElementById('nom_carte');
 let inputDate_expire = document.getElementById('date_expire');
 let inputCode_securit = document.getElementById('input_code_securit');
+let instructions_speciales = document.getElementById('instructions_speciales');
 let infos_client = document.getElementById('infos_client');
 let email_Client = document.getElementById('email_Client');
+let type_carte_credit = document.getElementById('type_carte_credit');
 let somme_article = document.getElementById('somme_article');
 
 
@@ -25,7 +27,7 @@ const validateNumero_carte = () => {
 	}
 };
 const validateNom_carte = () => {
-	if (inpuNumero_carte.validity.valid) {
+	if (inputNom_carte.validity.valid) {
 		erreur_nom_carte.classList.add('hidden');
 	} else {
 		erreur_nom_carte.innerText = 'Le champ nom du titulaire est requis.';
@@ -63,16 +65,18 @@ formPaiement.addEventListener('submit', async (event) => {
 	}
 
 	let data = {
-		numero_carte: Number(inpuNumero_carte.value),
-		nom_titulaire_cart: inputNom_carte.value,
-        date_expiration: inputDate_expire.value,
+		numero_carte_credit: inpuNumero_carte.value,
+		nom_titulaire_carte: inputNom_carte.value,
+        date_expiration_carte: inputDate_expire.value,
         code_securite: inputCode_securit.value,
         adresse_livraison: infos_client.textContent,
 		email_Client: email_Client.textContent,
-		somme_article: Number(somme_article.textContent.substring(0, somme_article.textContent.length-2)),
+		instructions_speciales: instructions_speciales.textContent,
+		type_carte_credit: type_carte_credit.value,
+		montant: Number(somme_article.textContent.substring(0, somme_article.textContent.length-2)),
 
 	};
-
+console.log(data);
 	let response = await fetch('/paiement', {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },

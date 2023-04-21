@@ -1,7 +1,7 @@
 aside {
 	height: 100vh;
 	background-color: rgb(5, 91, 0);
-	width: 30%;
+	width: 25%;
 	text-align: center;
 	border: solid 1px;
 	color: white;
@@ -21,6 +21,10 @@ body {
 	justify-content: center;
 	padding: 0;
 }
+.admin-h1 {
+	color: white;
+	text-shadow: 2px 2px 4px #000000;
+}
 .admin-navigation .section {
 	color: white;
 	height: 100%;
@@ -33,10 +37,27 @@ body {
 	font-size: 1.7rem;
 	text-decoration: none;
 }
+.admin-navigation .section:hover {
+	background-color: #fb911f;
+	transition: all 0.4s;
+}
+/* .admin-navigation .section::after {
+	background-color: #fb911f;
+} */
 .admin-navigation img {
 	width: 35px;
 }
-
+.titre-tab img {
+	width: 35px;
+	transform: rotate(180deg);
+}
+.titre-tab {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 10px;
+	text-decoration: none;
+}
 .contenuAdmin {
 	display: flex;
 }
@@ -50,6 +71,7 @@ body {
 	display: flex;
 	justify-content: space-between;
 	background-color: #fb911f;
+	width: 100%;
 }
 .tableau .titre h3 {
 	padding: 0;
@@ -60,38 +82,59 @@ body {
 .contenuTable {
 	display: flex;
 	justify-content: space-between;
-	/* align-items: center; */
+}
+.contenuTable img {
+	width: 80px;
+	height: 70px;
+	border-radius: 10%;
 }
 .contenuTable:nth-child(2n-1) {
 	background-color: #ff9f3834;
 }
 
 .contenuTable:hover {
-	background-color: rgba(136, 255, 255, 0.875);
+	background-color: rgba(223, 223, 223, 0.875);
 }
 .contenuTable p,
-button {
+.contenuTable button {
 	margin: 0;
 	width: 100%;
+	/* min-width: 80px; */
 	text-align: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	border: 1px solid;
 }
+
+button {
+	font-size: 1rem;
+	border: 1px solid;
+}
+
 .contenuTable button {
 	background-color: rgba(255, 255, 255, 0.577);
 	cursor: pointer;
 }
 
-.contenuTable p:nth-child(1) {
-	width: 100px;
+.contenuTable .btn_supprimer:hover {
+	background-color: rgb(255, 135, 135);
+	color: white;
+	transition: all 0.3s;
+}
+.btn_supp_utilisateur:hover {
+	background-color: rgb(255, 135, 135);
+	color: white;
+	transition: all 0.3s;
 }
 .titre h3 {
 	padding: 10px;
 	border-left: 1px solid;
 	border-right: 1px solid;
 }
-.titre h3:nth-child(1) {
+/* .titre h3:nth-child(1) {
 	width: 100px;
-}
+} */
 .form form {
 	display: flex;
 	flex-direction: column;
@@ -99,8 +142,19 @@ button {
 	justify-content: center;
 	/* width: 165px; */
 }
+.form form p {
+	text-align: start;
+	width: 100%;
+	margin: 0;
+}
 /* fin */
+.titre {
+	position: sticky;
+	top: 80px;
+}
 .contenuAdmin .titreComm {
+	position: sticky;
+	top: 0;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -114,7 +168,7 @@ button {
 	border: solid 1px azure;
 	border-collapse: separate;
 	color: black;
-	overflow: scroll;
+	overflow-y: scroll;
 }
 
 /* .form {
@@ -136,16 +190,41 @@ button {
 input[type],
 textarea {
 	padding: 10px;
-	width: 100%;
+	width: 95%;
 	border: 1px solid azure;
 	outline: none;
 	background: none;
 	color: white;
 }
+.select2 {
+	padding: 10px 5px;
+	border: 1px solid azure;
+	outline: none;
+	background: none;
+	color: white;
+	width: 100%;
+}
+.select1 {
+	padding: 10px 5px;
+	border: 1px solid azure;
+	outline: none;
+	background: none;
+	color: white;
+	width: 100%;
+}
+#form_ajouter_menu div p {
+	color: aliceblue;
+	text-align: center;
+}
+label {
+	color: aliceblue;
+	width: 90%;
+}
 input[type='submit'] {
 	color: white;
 	background: #fb911f;
 	margin: 15px;
+	cursor: pointer;
 }
 input[type='submit']:hover {
 	background: #ff9f38;
@@ -155,7 +234,7 @@ input[type='submit']:hover {
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	padding: 30px;
+	padding: 15px;
 	width: 20%;
 	background-color: rgb(5, 91, 0);
 }
@@ -170,4 +249,97 @@ h2 {
 .form h2 {
 	color: white;
 	text-shadow: 2px 2px 4px #000000;
+}
+.form_ingred {
+	background-color: rgb(0, 109, 0);
+	width: 35%;
+	height: 390px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	transition: all 1s;
+	display: none;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	border-radius: 1rem;
+	/* padding: 35px 0; */
+}
+.form_ingred h2,
+.form_ingred h2 div,
+.form_update h2 div {
+	text-align: center;
+}
+.form_update {
+	background-color: green;
+	width: 40%;
+	/* height: 440px; */
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	transition: all 1s;
+	display: none;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	border-radius: 1rem;
+	padding: 35px 0;
+}
+.form_update img,
+.form_ingred img {
+	position: absolute;
+	top: 8px;
+	right: 8px;
+	width: 20px;
+	cursor: pointer;
+}
+.form_update form,
+.form_ingred form {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 90%;
+}
+
+.form_update form input[type='button'],
+.form_ingred form input[type='button'] {
+	width: 85%;
+	background-color: #fb911f;
+	font-size: 1rem;
+	cursor: pointer;
+	transition: all 0.3s;
+}
+.form_update label,
+.form_ingred label {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	/* align-items: center; */
+	text-align: start;
+	width: 100%;
+	margin-bottom: 10px;
+}
+.form_update form input[type='button']:hover,
+.form_ingred form input[type='button']:hover {
+	background-color: green;
+	transition: all 0.3s;
+}
+.form_update input::placeholder,
+.form_update textarea::placeholder,
+.form_ingred input::placeholder,
+.form_ingred textarea::placeholder {
+	color: rgb(193, 193, 193);
+}
+
+.erreur {
+	color: rgb(252, 88, 88);
+	padding: 0;
+	margin: 0;
+	display: none;
+}
+.hidden {
+	display: block;
 }

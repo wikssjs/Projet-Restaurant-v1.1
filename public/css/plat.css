@@ -60,6 +60,7 @@ main {
 }
 .Note_client:hover {
 	fill: orange;
+	color: orange;
 }
 
 .etoil-contenu {
@@ -409,6 +410,37 @@ textarea {
 	/* background-color: orange;
 	border: none;
 	color: white; */
+}
+
+.ingredient {
+	color: #000;
+}
+.titreIngre {
+	display: flex;
+	gap: 5px;
+}
+.listIngre {
+	margin: 10px;
+}
+.activeIngredient {
+	display: block;
+}
+summary {
+	font-size: 1.4rem;
+	font-weight: bold;
+	margin-bottom: 15px;
+	cursor: pointer;
+}
+
+summary:hover {
+	fill: orange;
+	color: orange;
+}
+input[type='checkbox'] {
+	background-color: orange;
+}
+.descriptinIng {
+	margin-left: 17px;
 }
 @media (max-width: 710px) {
 	.contenuPanier {

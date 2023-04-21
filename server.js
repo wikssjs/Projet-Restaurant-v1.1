@@ -8,9 +8,9 @@ import compression from 'compression';
 import session from 'express-session';
 import memorystore from 'memorystore';
 import passport from 'passport';
-import {getPlatsParClientPanier , addMenuClient, removePlatParClient,removePlat, getCommentaire, getClients, getMenus, voirPlat, getSommePlatsParClient, getQuantitePlatsParClient, quantitePlus, quantiteMoin, addMenu, addCommentaire, addEtoil, getMoyenneEtoil, getCommentaireParPlat, addPaiementParClient, removePanierClient, rechercherMenus} from './model/requetes.js';
-import { addClient, getUsers, removeUser } from './model/client.model.js';
-import { isIDValide, isEmailValide, isPasswordValide, coursValide, contactValide } from './validation.js';
+import {getPlatsParUtilisateurPanier , addMenuClient, removePlatParClient,removePlat, getCommentaire, getUtilisateurs, getMenus, voirPlat, getSommePlatsParUtilisateur, getQuantitePlatsParUtilisateur, quantitePlus, quantiteMoin, addMenu, addCommentaire, addEtoil, getMoyenneEtoil, getCommentaireParPlat, addPaiementParClient, addLivraisonClient, removePanierClient, rechercherMenus, getPaiement, updateMenu, getIngredientsParMenu, addIngredient, getCommandes, getFounisseurFourniture, getCategorieMenu} from './model/requetes.js';
+import { addUtilisateur, removeUtilisateur } from './model/utilisateur.model.js';
+import { isEmailValide, isPasswordValide, contactValide } from './validation.js';
 import './authentification.js';
 
 // Création du serveur
@@ -72,22 +72,19 @@ app.get('/', (request, response) => {
     response.render('connexion', {
         titre: 'connexion',
         styles: ['/css/connexion.css'],
-        scripts: ['/js/login.js']
+        scripts: ['/js/login.js', '/js/client.js']
     });
 })
 
 app.post('/', async (request, response, next) =>{
-
     if (isEmailValide(request.body.emailClient) && 
-        isPasswordValide(request.body.motDePasseClient)) {
+        isPasswordValide(request.body.motDePasseClient) ) {
 		passport.authenticate('local', (error, utilisateur, info) => {
-            // console.log(request.session);
 			if (error) {
 				next(error);
-			} else if (!utilisateur) {
+			}
+             else if (!utilisateur) {
 				response.status(401).json(info);
-				// response.status(401).redirect('/');
-                console.log('erreur 401');
 			} else {
 				request.logIn(utilisateur, (error) => {
 					if (error) {
@@ -104,11 +101,10 @@ app.post('/', async (request, response, next) =>{
 });
 
 app.post('/inscription', async (request, response) => {
-    // console.log(request.body);
-	if (contactValide(request.body)) {
+	if (await contactValide(request.body)) {
 		try {
-			await addClient(request.body.nom, request.body.prenom, request.body.mot_passe, request.body.courriel);
-			response.status(201).end();
+			await addUtilisateur(1 ,request.body.nom, request.body.prenom, request.body.mot_passe, request.body.courriel);
+			response.status(200).end();
 		} catch (error) {
 			if (error.code === 'SQLITE_CONSTRAINT') {
 				response.status(409).end();
@@ -122,14 +118,16 @@ app.post('/inscription', async (request, response) => {
 });
 app.get('/home', async (request, response) => {
     if (request.user) {
-        let id_client=request.user.id_client
+        let id_utilisateur=request.user.id_utilisateur
         response.render('accueil', {
             titre: 'Accueil',
-            plats: await getMenus(id_client, limite),
-            nom_client: request.user.nom_client,
+            plats: await getMenus(id_utilisateur, limite),
+            nom_client: request.user.nom,
             styles: ['/css/header.css','/css/footer.css','/css/main.css'],
-            nbplat: (await getPlatsParClientPanier(id_client)).length,
+            nbplat: (await getPlatsParUtilisateurPanier(id_utilisateur)).length,
             commentaires: await getCommentaire(),
+            type: request.user.type === 'Admin',
+            connecter: request.user,
             scripts: ['/js/index.js','/js/panier.js','/js/voirPlus.js'],
             james:request.originalUrl == '/home'
     
@@ -140,7 +138,7 @@ app.get('/home', async (request, response) => {
             titre: 'Accueil',
             plats: await getMenus(0, limite),
             styles: ['/css/header.css','/css/footer.css','/css/main.css'],
-            nbplat: (await getPlatsParClientPanier(0)).length,
+            nbplat: (await getPlatsParUtilisateurPanier(0)).length,
             commentaires: await getCommentaire(),
             scripts: ['/js/index.js','/js/panier.js','/js/voirPlus.js'],
             james:request.originalUrl == '/home'
@@ -150,21 +148,6 @@ app.get('/home', async (request, response) => {
     }
 })
 
-
-
-app.get('/admin', (request, response) => {
-    if (request.user) {
-        response.render('admin', {
-            titre: 'Admin',
-            styles: ['/css/admin.css','/css/style.css']
-        });
-        
-    } 
-    else{
-        response.status(401).redirect('/');
-    }
-
-})
 let nom_menu;
 app.post('/recherche', async (request, response) =>{
     if (request.user) {
@@ -178,10 +161,12 @@ app.get('/trouver-menu', async(request, response) => {
     if (request.user) {
         response.render('rechercher', {
             titre: 'rechercher',
-            plats: await rechercherMenus(request.user.id_client, nom_menu),
-            nbplat: (await getPlatsParClientPanier(0)).length,
+            plats: await rechercherMenus(request.user.id_utilisateur, nom_menu),
+            nbplat: (await getPlatsParUtilisateurPanier(request.user.id_utilisateur)).length,
             styles: ['/css/rechercher.css','/css/header.css', '/css/footer.css'],
             scripts: ['/js/index.js','/js/panier.js'],
+            connecter: request.user,
+            type: request.user.type === 'Admin',
             james:request.originalUrl == '/trouver-menu'
         });
         
@@ -191,11 +176,14 @@ app.get('/trouver-menu', async(request, response) => {
     }
 
 })
-app.get('/admin/commandes', (request, response) => {
+app.get('/admin/commandes', async(request, response) => {
     if (request.user) {
         response.render('commandes', {
             titre: 'Admin',
-            styles: ['/css/admin.css','/css/style.css']
+            type: request.user.type== 'Admin',
+            commandes: await getCommandes(),
+            styles: ['/css/admin.css','/css/style.css'],
+            scripts: ['/js/admin.js']
         });
         
     }
@@ -204,13 +192,31 @@ app.get('/admin/commandes', (request, response) => {
     }
 
 })
-
-app.get('/admin/clients', async (request, response) => {
+app.get('/admin/fournisseur', async(request, response) => {
     if (request.user) {
-        response.render('clients', {
+        response.render('fournisseur', {
             titre: 'Admin',
-            clients: await getClients(),
-            styles: ['/css/admin.css']
+            type: request.user.type== 'Admin',
+            fournisseur: await getFounisseurFourniture(),
+            styles: ['/css/admin.css','/css/style.css'],
+            // scripts: ['/js/admin.js']
+        });
+        
+    }
+    else{
+        response.status(401).redirect('/');
+    }
+
+})
+
+app.get('/admin/utilisateurs', async (request, response) => {
+    if (request.user) {
+        response.render('utilisateurs', {
+            titre: 'Admin',
+            type: request.user.type== 'Admin',
+            clients: await getUtilisateurs(),
+            styles: ['/css/admin.css'],
+            scripts: ['/js/admin.js']
         });
         
     }
@@ -218,13 +224,16 @@ app.get('/admin/clients', async (request, response) => {
         response.status(401).redirect('/');
     }
 })
+
 
 app.get('/admin/menus', async (request, response) => {
     if (request.user) {
-        let id_client=request.user.id_client
+        let id_utilisateur=request.user.id_utilisateur
         response.render('menus', {
             titre: 'Admin',
-            menus: await getMenus(id_client, 100),
+            menus: await getMenus(id_utilisateur, 100),
+            categories: await getCategorieMenu(),
+            type: request.user.type== 'Admin',
             styles: ['/css/admin.css','/css/style.css'],
             scripts: ['/js/admin.js'],
         });
@@ -235,10 +244,13 @@ app.get('/admin/menus', async (request, response) => {
     }
 })
 
-app.get('/admin/personnel', (request, response) => {
+app.get('/admin', async(request, response) => {
     if (request.user) {
-        response.render('personnel', {
-            titre: 'Admin',
+        console.log(request.user);
+        response.render('paiement_admin', {
+            titre: 'Historique des paiement',
+            paiements: await getPaiement(),
+            type: request.user.type== 'Admin',
             styles: ['/css/admin.css','/css/style.css']
         });
         
@@ -250,8 +262,8 @@ app.get('/admin/personnel', (request, response) => {
 
 app.patch('/quantitePlus', async (request, response) => {
     if (request.user) {
-        let id_client=request.user.id_client
-        await quantitePlus(id_client, request.body.id_menu)
+        let id_utilisateur=request.user.id_utilisateur
+        await quantitePlus(id_utilisateur, request.body.id_menu)
         console.log(request.body);
         response.status(200).end();
         
@@ -261,11 +273,10 @@ app.patch('/quantitePlus', async (request, response) => {
 });
 app.patch('/quantiteMoin', async (request, response) => {
     if (request.user) {
-        let id_client=request.user.id_client
-        await quantiteMoin(id_client, request.body.id_menu)
+        let id_utilisateur=request.user.id_utilisateur
+        await quantiteMoin(id_utilisateur, request.body.id_menu)
         console.log(request.body);
-        response.status(200).end();
-        
+        response.status(200).end();       
     } 
     else{
         response.status(401).redirect('/');
@@ -274,15 +285,17 @@ app.patch('/quantiteMoin', async (request, response) => {
 
 app.get('/panier', async (request, response) => {
     if (request.user) {
-        let id_client=request.user.id_client
+        let id_utilisateur=request.user.id_utilisateur
         response.render('panier', {
             titre: 'Panier',
-            plats: await getPlatsParClientPanier(id_client),
-            nbplat: (await getPlatsParClientPanier(id_client)).length,
-            sommeArticleClient: (await getSommePlatsParClient(id_client))[0].somme,
-            quantiteArticleClient: (await getQuantitePlatsParClient(id_client))[0].quantite,
-            sommeArticleClientPlusLivraison: ((await getSommePlatsParClient(id_client))[0].somme + fraisLivaison).toFixed(2),
-            nom_client: request.user.nom_client,
+            plats: await getPlatsParUtilisateurPanier(id_utilisateur),
+            nbplat: (await getPlatsParUtilisateurPanier(id_utilisateur)).length,
+            sommeArticleClient: (await getSommePlatsParUtilisateur(id_utilisateur))[0].somme,
+            quantiteArticleClient: (await getQuantitePlatsParUtilisateur(id_utilisateur))[0].quantite,
+            sommeArticleClientPlusLivraison: ((await getSommePlatsParUtilisateur(id_utilisateur))[0].somme + fraisLivaison).toFixed(2),
+            nom_client: request.user.nom,
+            connecter: request.user,
+            type: request.user.type === 'Admin',
             styles: ['/css/panier.css','/css/header.css','/css/footer.css'],
             scripts: ['/js/index.js','/js/panier.js'],
             james:request.originalUrl =='/panier'
@@ -293,11 +306,30 @@ app.get('/panier', async (request, response) => {
     }
 })
 
+app.patch('/updatePlat', async (request, response) =>{
+    if (request.user) {
+        console.log(request.body);
+        
+        await updateMenu(          
+            request.body.nom,
+            request.body.description,
+            request.body.prix,
+            `/images/img_plats/${request.body.img_name}`,
+            request.body.id_menu,
+            request.body.id_categorie_menu
+        );
+            response.status(200).end();
+        
+    }else{
+        response.status(401).end();
+    }
+});
+
 app.post('/ajout', async (request, response) =>{
     if (request.user) {
         
-        let id_client=request.user.id_client
-        let succes= await addMenuClient(id_client, request.body.id_menu, 1);
+        let id_utilisateur =request.user.id_utilisateur
+        let succes= await addMenuClient(id_utilisateur, request.body.id_menu, 1, "en cours");
         
             console.log(request.body);
         if (succes) {
@@ -310,14 +342,31 @@ app.post('/ajout', async (request, response) =>{
 });
 app.post('/ajouterUnPlat', async (request, response) =>{
     if (request.user) {
+        console.log(request.body);
         await addMenu(
             request.body.nom,
             request.body.description,
             request.body.prix,
-            `/images/img_plats/${request.body.image_url}`
+            `/images/img_plats/${request.body.image_url}`,
+            request.body.id_categorie_menu
+
         )
-        response.status(200).redirect('/admin/menus')
-        
+        response.status(200).end();
+    }
+    else{
+        response.status(401).redirect('/');
+    }
+    }
+);
+app.post('/ajouerIngredient', async (request, response) =>{
+    if (request.user) {
+        console.log(request.body);
+        await addIngredient(
+            request.body.id_menu,
+            request.body.nom,
+            request.body.description           
+        )
+        response.status(200).end();
     }
     else{
         response.status(401).redirect('/');
@@ -326,10 +375,17 @@ app.post('/ajouterUnPlat', async (request, response) =>{
 );
 app.delete('/supprimerUnPlat', async (request, response) =>{
     if (request.user) {
-        let succes = await removePlat(request.body.id_menu)
-        if (succes) {
-            response.status(200).end();
-        }
+        await removePlat(request.body.id_menu)
+        response.status(200).end();
+        
+    }else{
+        response.status(401).redirect('/');
+    }
+});
+app.delete('/supprimerUtilisateur', async (request, response) =>{
+    if (request.user) {
+        await removeUtilisateur(request.body.id_utilisateur);
+        response.status(200).end();
         
     }else{
         response.status(401).redirect('/');
@@ -338,12 +394,9 @@ app.delete('/supprimerUnPlat', async (request, response) =>{
 app.delete('/supp', async (request, response) =>{
     console.log(request.body);
     if (request.user) {
-        let id_client=request.user.id_client
-        let succes = await removePlatParClient(id_client, request.body.id_menu)
-        if (succes) {
-            response.status(200).end();
-        }
-        
+        let id_utilisateur=request.user.id_utilisateur
+        await removePlatParClient(id_utilisateur, request.body.id_menu)
+        response.status(200).end();
     }else{
         response.status(401).redirect('/');
     }
@@ -354,6 +407,7 @@ app.get('/adresse', (request, response) => {
     if (request.user) {
         response.render('adresse', {
             titre: 'adresse',
+            type: request.user.type === 'Admin',
             styles: ['/css/adresse.css'],
             james:request.originalUrl.toLowerCase === '/panier'
         });
@@ -367,14 +421,15 @@ app.get('/adresse', (request, response) => {
 app.get('/informations', async (request, response) => {
     // console.log(request.originalUrl)
     if (request.user) {
-        let id_client=request.user.id_client
+        let id_utilisateur=request.user.id_utilisateur
         response.render('informations', {
             titre: 'informations',
             fraisLivaison: fraisLivaison,
-            plats: await getPlatsParClientPanier(id_client),
-            sommeArticleClient: (await getSommePlatsParClient(id_client))[0].somme,
-            quantiteArticleClient: (await getQuantitePlatsParClient(id_client))[0].quantite,
-            sommeArticleClientPlusLivraison: ((await getSommePlatsParClient(id_client))[0].somme + fraisLivaison).toFixed(2),
+            plats: await getPlatsParUtilisateurPanier(id_utilisateur),
+            sommeArticleClient: (await getSommePlatsParUtilisateur(id_utilisateur))[0].somme,
+            quantiteArticleClient: (await getQuantitePlatsParUtilisateur(id_utilisateur))[0].quantite,
+            sommeArticleClientPlusLivraison: ((await getSommePlatsParUtilisateur(id_utilisateur))[0].somme + fraisLivaison).toFixed(2),
+            type: request.user.type === 'Admin',
             scripts: ['/js/information.js'],
             styles: ['/css/informations.css'],
             james:request.originalUrl.toLowerCase === '/informations'
@@ -388,7 +443,7 @@ let infos;
 app.post('/information', async (request, response) => {
     if (request.user) {
         
-        response.status(201).end();
+        response.status(200).end();
         console.log(request.body);
         infos=request.body;
     }else{
@@ -398,23 +453,29 @@ app.post('/information', async (request, response) => {
 });
 
 
-app.post('/paiement', async (request, response) => {
-    
+app.post('/paiement', async (request, response) => {   
     if (request.user) {
-        
-      console.log(request.body);
         let succes= await addPaiementParClient(
-            request.user.id_client,
-            request.body.somme_article,
-            request.body.adresse_livraison,
-            request.body.numero_carte,
-            request.body.nom_titulaire_cart,
-            request.body.date_expiration,
+            request.user.id_utilisateur,
+            request.body.montant,
+            "effectué",
+            request.body.type_carte_credit,
+            request.body.numero_carte_credit,
+            request.body.nom_titulaire_carte,
+            request.body.date_expiration_carte,
             request.body.code_securite
         )
-        if (succes) {
-     
-            await removePanierClient(request.user.id_client)
+        let succes2 = await addLivraisonClient(
+            request.user.id_utilisateur,
+            request.user.prenom+' '+request.user.nom,
+            request.body.adresse_livraison,
+            request.body.instructions_speciales,
+            "En cours"
+        )
+        
+        if (succes && succes2) {
+            
+            await removePanierClient(request.user.id_utilisateur)
             response.status(200).end();  
         }
 
@@ -425,16 +486,18 @@ app.post('/paiement', async (request, response) => {
 app.get('/informations/livraison', async (request, response) => {
     // console.log(request.originalUrl)
     if (request.user) {
-        let id_client=request.user.id_client
+        let id_utilisateur=request.user.id_utilisateur
         response.render('livraison', {
             titre: 'Livraison',
             fraisLivaison: fraisLivaison,
-            plats: await getPlatsParClientPanier(id_client),
-            sommeArticleClient: (await getSommePlatsParClient(id_client))[0].somme,
-            quantiteArticleClient: (await getQuantitePlatsParClient(id_client))[0].quantite,
-            sommeArticleClientPlusLivraison: ((await getSommePlatsParClient(id_client))[0].somme + fraisLivaison).toFixed(2),
+            plats: await getPlatsParUtilisateurPanier(id_utilisateur),
+            sommeArticleClient: (await getSommePlatsParUtilisateur(id_utilisateur))[0].somme,
+            quantiteArticleClient: (await getQuantitePlatsParUtilisateur(id_utilisateur))[0].quantite,
+            sommeArticleClientPlusLivraison: ((await getSommePlatsParUtilisateur(id_utilisateur))[0].somme + fraisLivaison).toFixed(2),
             emailClient: request.user.email,
             info: infos.adresse+', '+infos.appatement+', '+infos.code_postal+', '+infos.ville+', '+infos.pays,
+            instructions_speciales: infos.instructions_speciales,
+            type: request.user.type === 'Admin',
             scripts: ['/js/livraison.js'],
             styles: ['/css/livraison.css'],
             james:request.originalUrl.toLowerCase === '/livraison'
@@ -458,16 +521,18 @@ app.post('/livraison', async (request, response) => {
 app.get('/informations/livraison/paiement', async (request, response) => {
     // console.log(request.originalUrl)
     if (request.user) {
-        let id_client=request.user.id_client
+        let id_utilisateur=request.user.id_utilisateur
         response.render('paiement', {
             titre: 'paiement',
             fraisLivaison: fraisLivaison,
-            plats: await getPlatsParClientPanier(id_client),
-            sommeArticleClient: (await getSommePlatsParClient(id_client))[0].somme,
-            quantiteArticleClient: (await getQuantitePlatsParClient(id_client))[0].quantite,
-            sommeArticleClientPlusLivraison: ((await getSommePlatsParClient(id_client))[0].somme + fraisLivaison).toFixed(2),
+            plats: await getPlatsParUtilisateurPanier(id_utilisateur),
+            sommeArticleClient: (await getSommePlatsParUtilisateur(id_utilisateur))[0].somme,
+            quantiteArticleClient: (await getQuantitePlatsParUtilisateur(id_utilisateur))[0].quantite,
+            sommeArticleClientPlusLivraison: ((await getSommePlatsParUtilisateur(id_utilisateur))[0].somme + fraisLivaison).toFixed(2),
             emailClient: request.user.email,
             info: infos.adresse+', '+infos.appatement+', '+infos.code_postal+', '+infos.ville+', '+infos.pays,
+            instructions_speciales: infos.instructions_speciales,
+            type: request.user.type === 'Admin',
             styles: ['/css/paiement.css'],
             scripts: ['/js/paiement.js']
             // james:request.originalUrl === '/informations/livraison/paiement'
@@ -501,16 +566,13 @@ app.get('/inscription', (request, response) => {
 })
 
 
-
-
-
 app.get('/plat/:index', async(request, response)=>{
     if (request.user) {
-        let id_client=request.user.id_client
-        let menu =await voirPlat(id_client, request.params.index)
+        let id_utilisateur=request.user.id_utilisateur
+        let menu =await voirPlat(id_utilisateur, request.params.index)
         if (menu.length>1) {
             for (let i = 0; i < menu.length; i++) {
-                if (menu[i].id_client == id_client) {
+                if (menu[i].id_utilisateur == id_utilisateur) {
                     menu=menu.splice(i, 1)
                 }
             }
@@ -519,13 +581,16 @@ app.get('/plat/:index', async(request, response)=>{
         // moyenneEtoil: Array((await getMoyenneEtoil(request.params.index)).moyenne_etoil).fill(true),
         response.render('plat', {
             titre: 'plat',
-            nbplat: (await getPlatsParClientPanier(id_client)).length,
+            nbplat: (await getPlatsParUtilisateurPanier(request.user.id_utilisateur)).length,
             menu: menu,
             fraisLivaison: fraisLivaison,
             moyenneEtoilNum: (await getMoyenneEtoil(request.params.index)).moyenne_etoil,
             moyenneEtoil: Array(Math.round((await getMoyenneEtoil(request.params.index)).moyenne_etoil)).fill(true),
             getCommentaireParPlat: await getCommentaireParPlat(request.params.index),
-            nom_client: request.user.nom_client,
+            ingredients: await getIngredientsParMenu(request.params.index),
+            nom_client: request.user.nom,
+            type: request.user.type === 'Admin',
+            connecter: request.user,
             styles: ['/css/plat.css','/css/header.css','/css/footer.css'],
             scripts: ['/js/index.js', '/js/plat.js', '/js/panier.js'],
             james:request.originalUrl == `/plat/${request.params.index}`,
@@ -541,8 +606,8 @@ app.post('/commentaire', async (request, response) =>{
             
             let succes= await addCommentaire(
                 Number(request.body.id_menu),
-                request.user.id_client,
-                request.body.nom_commentataire,
+                request.user.id_utilisateur,
+                request.body.nom_utilisateur,
                 request.body.email,
                 request.body.commentaire
             );
@@ -560,8 +625,8 @@ app.post('/ajoute-note', async (request, response) =>{
             
             let succes= await addEtoil(
                 request.body.id_menu,
-                request.user.id_client,
-                request.body.note
+                request.user.id_utilisateur,
+                request.body.nb_etoiles
             );
             if (succes) {
                 response.status(200).end();               

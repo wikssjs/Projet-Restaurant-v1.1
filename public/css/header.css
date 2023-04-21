@@ -7,7 +7,7 @@ main p {
 	color: black;
 }
 header {
-	background-image: url(/images/header.jpeg);
+	background-image: url(/images/backgroundImg/1.jpg);
 	background-size: cover;
 	height: 600px;
 }
@@ -23,9 +23,11 @@ body {
 	position: relative;
 }
 .logo {
-	width: 80px;
+	width: 160px;
 }
-
+.tailleLogo {
+	transform: scale(0.8);
+}
 .nav.toggleNav {
 	position: fixed;
 	top: 0;
@@ -270,6 +272,27 @@ input {
 .menu_user a:hover,
 .menu_user input:hover {
 	color: #fb911f;
+}
+.direction {
+	position: absolute;
+	top: 35%;
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	padding: 20px;
+}
+.direction_droite,
+.direction_gauche {
+	width: 40px;
+	height: 40px;
+	fill: white;
+	cursor: pointer;
+	transition: all 0.3s;
+}
+.direction_droite:active,
+.direction_gauche:active {
+	transform: scale(0.9);
+	transition: all 0.3s;
 }
 @media (max-width: 715px) {
 	.descriptionHeader {

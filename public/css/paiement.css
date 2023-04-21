@@ -34,6 +34,10 @@ form {
 	align-items: center;
 	flex-direction: column;
 }
+.vera img {
+	width: 400px;
+	margin-bottom: 30px;
+}
 .vera h1 {
 	font-size: 3rem;
 	margin: 16px 0;
@@ -63,6 +67,11 @@ input {
 	margin: 15px 10px 10px 10px;
 	width: 90%;
 }
+select {
+	width: 94%;
+
+	margin: 15px 10px 10px 10px;
+}
 .basform {
 	display: flex;
 	justify-content: space-between;
@@ -91,9 +100,7 @@ input::placeholder:focus {
 h2 {
 	margin-bottom: 0;
 }
-select {
-	width: 100%;
-}
+
 .basform {
 	display: flex;
 	justify-content: space-between;

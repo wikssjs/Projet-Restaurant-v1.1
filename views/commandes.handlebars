@@ -1,48 +1,35 @@
+{{#if type}}
 <div class="contenuAdmin">
 
     {{>admin_navigation}}
     <div class='tableaux'>
         <div class="titreComm">
-            <h1 class="">Commandes</h1>
+            <h1 class="admin-h1">Commandes</h1>
         </div>
         <div class="tableau">
             <div class="titre">
-                <h3>N°</h3>
-                <h3>Nom</h3>
+                <h3>Nom du client</h3>
+                <h3>Menu</h3>
+                <h3>Image</h3>
                 <h3>Prix</h3>
-                <h3>Source</h3>
-                <h3>Description</h3>
-                <h3>Action</h3>
+                <h3>Quantité</h3>
+                <h3>Etat de la commande</h3>
+                <h3>Date de la commande</h3>
             </div>
+            {{#each commandes}}
             <div class="contenuTable">
-                <p>1</p>
-                <p>Nom command</p>
-                <p>Prix</p>
-                <p>Source</p>
-                <p>Description</p>
-                <button>supprimer</button>
-
+                <p>{{this.nom_client}}</p>
+                <p>{{this.nom_menu}}</p>
+                <p><img src={{this.image_url}} alt="image du plat"></p>
+                <p>{{this.prix}}</p>
+                <p>{{this.quantite}}</p>
+                <p>{{this.etat_commande}}</p>
+                <p>{{this.date_commande}}</p>
             </div>
-            <div class="contenuTable">
-                <p>2</p>
-                <p>Nom command</p>
-                <p>Prix</p>
-                <p>Source</p>
-                <p>Description</p>
-                <button>supprimer</button>
+            {{/each}}
 
-
-            </div>
-            <div class="contenuTable">
-                <p>3</p>
-                <p>Nom command</p>
-                <p>Prix</p>
-                <p>Source</p>
-                <p>Description</p>
-                <button>supprimer</button>
-
-            </div>
         </div>
     </div>
-            
+
 </div>
+{{/if}}

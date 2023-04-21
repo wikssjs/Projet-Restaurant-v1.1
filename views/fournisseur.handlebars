@@ -1,0 +1,36 @@
+{{#if type}}
+<div class="contenuAdmin">
+
+    {{>admin_navigation}}
+    <div class='tableaux'>
+        <div class="titreComm">
+            <h1 class="admin-h1">Fournisseurs</h1>
+        </div>
+        <div class="tableau">
+            <div class="titre">
+                <h3>Nom du fournisseur</h3>
+                <h3>Adresse</h3>
+                <h3>Email</h3>
+                <h3>Téléphone</h3>
+                <h3>Nom du fourniture</h3>
+                <h3>Description fourniture</h3>             
+                <h3>Quantite</h3>
+            </div>
+            {{#each fournisseur}}
+            <div class="contenuTable">
+                <p>{{this.Nom_fournisseur}}</p>
+                <p>{{this.adresse}}</p>
+                <p>{{this.email}}</p>
+                <p>{{this.telephone}}</p>
+                <p>{{this.Nom_fourniture}}</p>
+                <p>{{this.description_fournisseur}}</p>
+                <p>{{this.quantite}}</p>
+
+            </div>
+            {{/each}}
+           
+        </div>
+    </div>
+            
+</div>
+{{/if}}

@@ -1,32 +1,51 @@
 const panier=document.getElementById('quantite');
-const btnAjouterAuxPanier=document.querySelectorAll('.card-button');
+const btnAjouterAuxPanier=document.querySelectorAll('.svg-icon');
 const btnSupprimers=document.querySelectorAll('.btnSupprimer');
 const btnQuantePlus=document.querySelectorAll('.quantitePlus');
 const btnQuanteMoin = document.querySelectorAll('.quantiteMoin');
 const Payer= document.querySelector('.Payer')
-let valeur=Number(panier.textContent);
-// panier.textContent=(await getPlatsParClients).length
-const tabPanier=[];
-// console.log(Payer);
 
+const addPlatPanier = async (event) => {
+    let data = {
+        id_menu: Number(event.currentTarget.dataset.idplat),
+    };
+    console.log(event.currentTarget.dataset);
+    let response = await fetch('/ajout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+    });
 
-const addPlatPanier= async (event) => {
-	let data = {
-		id_menu: Number(event.currentTarget.dataset.idplat),
-	};
-	console.log(event.currentTarget.dataset);
-	let response = await fetch('/ajout', {
-		method: 'POST',
-		headers: { 'Content-Type': 'application/json' },
-		body: JSON.stringify(data),
-	});
-
-	if (response.ok) {
-		window.location.reload();
-	}else if (response.status === 401) {
-		window.location.replace('/')
-	}
+    if (response.ok) {
+		localStorage.setItem('showNotification', 'Ajout fait avec succes!'); // Stocke l'information de la notification dans le stockage local
+        window.location.reload(); // Recharge la page
+    } else if (response.status === 401) {
+        window.location.replace('/');
+		showAlert("Vous devez vous connecter d'abord!")
+    }
 };
+
+const checkNotification = () => {
+    const message = localStorage.getItem('showNotification');
+    if (message) {
+        localStorage.removeItem('showNotification');
+        showAlert(message);
+    }
+};
+
+const showAlert = (message) => {
+    let popupAlert = document.getElementById('alerte');
+    let notification = document.querySelector('.alert_container');
+    notification.style.display = 'flex';
+    popupAlert.innerText = message;
+
+    setTimeout(() => {
+        notification.style.display = 'none';
+    }, 5000);
+};
+
+checkNotification();
+
 
 const removeMenuPanier = async (event) => {
 	let btnSupprimers=event.currentTarget;
@@ -41,6 +60,7 @@ const removeMenuPanier = async (event) => {
 	});
 
 	if (response.ok) {
+		localStorage.setItem('showNotification', 'Le plat a été retiré avec succès!');
 		window.location.reload();
 	}
 };
@@ -89,43 +109,3 @@ for (let button of btnSupprimers) {
 	button.addEventListener('click', removeMenuPanier);
 }
 
-// if (btnAjouterAuxPanier) {
-//     btnAjouterAuxPanier.forEach(btn => {
-//         btn.addEventListener('click', (event)=>{
-           
-//             valeur++;
-//             panier.textContent=valeur;
-//         })
-//     })
-    
-// }
-
-// if (btnAjouterAuxPanier) {
-//     btnAjouterAuxPanier.forEach(btn => {
-//         btn.addEventListener('click', (event)=>{
-//             valeur++;
-//             panier.textContent=valeur;
-//         })
-//     })
-    
-// }
-// if (ajouterAuxPanier2) {
-//     ajouterAuxPanier2.forEach(btn => {
-//         btn.addEventListener('click', ()=>{
-//             valeur++;
-//             panier.textContent=valeur;
-//             Payer.textContent=valeur;
-//         })
-//     })
-    
-// }
-// if (retirerDuPanier) {
-//     retirerDuPanier.forEach(btn => {
-//         btn.addEventListener('click', ()=>{
-//             valeur--;
-//             panier.textContent=valeur;
-//             Payer.textContent=valeur;
-//         })
-//     })
-    
-// }

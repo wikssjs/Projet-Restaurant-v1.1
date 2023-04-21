@@ -17,7 +17,7 @@ section {
 	color: black;
 }
 .contenu_paiement_vaild > img {
-	width: 150px;
+	width: 300px;
 }
 .contenu_paiement_vaild {
 	display: flex;

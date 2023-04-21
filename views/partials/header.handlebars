@@ -17,7 +17,7 @@
 
 		<div>
 			<a href='/home'>
-				<img src='/images/veraaLogo.png' alt='logo' class='logo' />
+				<img src='/images/VeraLogo4.png' alt='logo' class='logo' />
 			</a>
 
 		</div>
@@ -27,13 +27,11 @@
 			<li class='lien'><a href='#menu'>Menu</a></li>
 			<li class='lien'><a href='#contact'>Contact</a></li>
 			<li class='lien'><a href='#temoignage'>Temoignage</a></li>
-			<li class='lien'><a href='#'>ENG</a></li>
-			{{! <li class='lien'><a href='/inscription'>Inscription</a></li> }}
-			{{! <li>
-				<a class='connexion' href='/'><img src='/images/user1.png' alt='logo user' />
-					CONNECTION
-				</a>
-			</li> }}
+			<li class='lien'><a href='#'>Réservation</a></li>
+			{{#if type}}
+				<li class='lien'><a href='/admin'>Admin</a></li>
+			{{/if}}
+
 			<li class='user'>
 				<div class='img_nom'>
 					<img src='/images/user1.png' alt='logo user' />
@@ -43,6 +41,9 @@
 					<form method='post' action='/deconnexion'>
 						<input type='submit' value='Déconnexion' />
 					</form>
+					{{#unless connecter}}
+						<a class='inscript' href='/'>Connexion</a>
+					{{/unless}}
 					<a class='inscript' href='/inscription'>Inscription</a>
 				</div>
 			</li>
@@ -73,4 +74,16 @@
 			magni ipsa tempora iure rem reiciendis totam iste exercitationem officiis. Fugit.
 		</p>
 	</div>
+	<div class='direction'>
+		<svg class='direction_gauche' width='24' height='24' xmlns='http://www.w3.org/2000/svg' fill-rule='evenodd' clip-rule='evenodd'><path
+				d='M20 .755l-14.374 11.245 14.374 11.219-.619.781-15.381-12 15.391-12 .609.755z'
+			></path>
+		</svg>
+		<svg class='direction_droite' width='24' height='24' xmlns='http://www.w3.org/2000/svg' fill-rule='evenodd' clip-rule='evenodd'><path
+				d='M4 .755l14.374 11.245-14.374 11.219.619.781 15.381-12-15.391-12-.609.755z'
+			></path>
+		</svg>
+
+	</div>
+
 </header>

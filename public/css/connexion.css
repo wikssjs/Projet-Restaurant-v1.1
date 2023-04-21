@@ -17,11 +17,11 @@ section {
 	color: black;
 }
 form > img {
-	position: absolute;
+	/* position: absolute; */
 
-	width: 100px;
-	top: -25px;
-	left: -25px;
+	width: 190px;
+	/* top: -25px;
+	left: -25px; */
 }
 form {
 	background-color: white;
@@ -53,7 +53,10 @@ form .input {
 }
 form .label {
 	position: relative;
-	margin: 20px 0;
+	margin-top: 20px;
+}
+form > p {
+	margin: 0 0 5px 0;
 }
 form label p {
 	position: absolute;
@@ -94,8 +97,6 @@ form input:valid ~ p {
 	transform: translateY(-17px);
 	transition: all 0.5s;
 }
-
-/* dhshjfhfdsdhf */
 
 .user,
 .password {

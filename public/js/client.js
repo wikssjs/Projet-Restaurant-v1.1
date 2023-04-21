@@ -1,4 +1,3 @@
-// Variables représentant les éléments de la page HTML
 let buttons = document.querySelectorAll('button');
 let form = document.getElementById('form-ajouter');
 let inputNom = document.getElementById('input-nom');
@@ -16,12 +15,11 @@ let container = document.querySelector('.container');
 
 const addClientServer = async (event) => {
 	event.preventDefault();
-
-	// Tester si toutes les données entrées sont valide
 	if (!form.checkValidity()) {
+		showAlert('Vous devez remplir tous les champs!');
+
 		return;
 	}
-
 	let data = {
 		nom: inputNom.value,
 		prenom: inputPrenom.value,
@@ -29,20 +27,44 @@ const addClientServer = async (event) => {
 		mot_passe: inputMotPasse.value,
 		mot_passe_confirm: inputMotPasseConfirm.value,
 	};
-
 	let response = await fetch('/inscription', {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
 		body: JSON.stringify(data),
 	});
 
-	if (response.ok && inputMotPasse.value === inputMotPasseConfirm.value) {
+	if (response.ok) {
 		window.location.replace('/');
+		localStorage.setItem('showNotification', 'Votre compte a été crée avec succès!');
 	} else if (response.status === 409) {
+		console.log('SQLITE_CONSTRAINT');
+	}else if (response.status === 400) {
 		erreurCourriel.innerText = 'Ce courriel est déjà pris';
 		erreurCourriel.classList.remove('hidden');
-	}
+		showAlert('Ce courriel est déjà pris')
+    }
 };
+const checkNotification = () => {
+    const message = localStorage.getItem('showNotification');
+    if (message) {
+        localStorage.removeItem('showNotification');
+        showAlert(message);
+    }
+};
+
+const showAlert = (message) => {
+    let popupAlert = document.getElementById('alerte');
+    let notification = document.querySelector('.alert_container');
+    notification.style.display = 'flex';
+    popupAlert.innerText = message;
+
+    setTimeout(() => {
+        notification.style.display = 'none';
+    }, 5000);
+};
+
+
+checkNotification();
 
 
 const validateNom = () => {
@@ -105,82 +127,4 @@ if (form) {
 	form.addEventListener('submit', addClientServer);
 }
 
-/**
- * Supprime un cours sur le serveur.
- * @param {Event} event Objet d'information de l'événement.
- */
-const removeUtilisateurServeur = async (event) => {
-	let button = event.currentTarget;
-	console.log(event.currentTarget.dataset.idCours);
-	let data = {
-		id_utilisateur: Number(button.dataset.idCours),
-	};
 
-	let response = await fetch('/users/delete', {
-		method: 'DELETE',
-		headers: { 'Content-Type': 'application/json' },
-		body: JSON.stringify(data),
-	});
-
-	if (response.ok) {
-		// On supprime le <li> si la suppression fonctionne sur le serveur
-		button.parentNode.remove();
-	}
-};
-
-// Ajoute la suppression du cours au clic de tous les boutons dans la liste
-// de cours
-for (let button of buttons) {
-	button.addEventListener('click', removeUtilisateurServeur);
-}
-
-// const addUserClient = (nom_user, prenom, courriel) => {
-// 	let liste = document.createElement('div');
-// 	liste.classList.add('listUsers');
-// 	let infos = document.createElement('div');
-// 	infos.classList.add('infos');
-// 	let button = document.createElement('button');
-// 	button.classList.add('inscrir');
-// 	button.innerText = 'Supprimer';
-// 	let nom = document.createElement('div');
-// 	nom.classList.add('nom-user');
-// 	nom.innerText = 'Nom : ' + nom_user;
-// 	let prenom_user = document.createElement('div');
-// 	prenom_user.classList.add('prenom-user');
-// 	prenom_user.innerText = 'Prénom : ' + prenom;
-// 	let courriel_user = document.createElement('div');
-// 	courriel_user.classList.add('courriel-user');
-// 	courriel_user.innerText = 'Courriel : ' + courriel;
-// 	let type_user = document.createElement('div');
-// 	type_user.classList.add('type-user');
-// 	type_user.innerText = 'Type : regulier';
-// 	let inscription = document.createElement('div');
-// 	inscription.classList.add('inscription-user');
-// 	inscription.innerText = "Nombre d'inscription : 0";
-// 	let cours_user = document.createElement('div');
-// 	cours_user.classList.add('cours-user');
-// 	cours_user.innerText = 'Cours : ';
-// 	infos.append(nom);
-// 	infos.append(prenom_user);
-// 	infos.append(courriel_user);
-// 	infos.append(type_user);
-// 	infos.append(inscription);
-// 	infos.append(cours_user);
-// 	liste.append(infos);
-// 	liste.append(button);
-// 	container.append(liste);
-// };
-
-// let source = new EventSource('/stream');
-// addUserClient("data.nom", "data.prenom", "data.courriel");
-// source.addEventListener('add-utilisateur', (event) => {
-// 	let data = JSON.parse(event.data);
-// 	addUserClient(data.nom, data.prenom, data.courriel);
-// });
-
-// source.addEventListener('delete-utilisateur', (event) => {
-// 	let data = JSON.parse(event.data);
-// 	let utilisateur = document.querySelector('.user' + data.id);
-// 	console.log(utilisateur, data.id);
-// 	utilisateur.remove();
-// });

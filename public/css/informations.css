@@ -27,6 +27,9 @@ form {
 	align-items: center;
 	flex-direction: column;
 }
+.vera img {
+	width: 400px;
+}
 .vera h1 {
 	font-size: 3rem;
 	margin: 16px 0;
@@ -47,11 +50,13 @@ label {
 	flex-direction: column;
 }
 input,
-select {
+select,
+textarea {
 	padding: 10px;
 	outline: none;
 }
-input {
+input,
+textarea {
 	width: 100%;
 	/* margin-right: ; */
 }

@@ -1,0 +1,26 @@
+.alert_container {
+	display: none;
+	justify-content: flex-end;
+	color: rgb(255, 228, 178);
+	position: sticky;
+	bottom: 0vh;
+	right: -400px;
+	transition: all 0.4s;
+}
+.alert img {
+	width: 30px;
+}
+.alert div {
+	font-size: 1.3rem;
+}
+.alert {
+	display: flex;
+	align-items: center;
+	gap: 5px;
+	padding: 8px;
+	border-top-left-radius: 16px;
+	border-bottom-left-radius: 16px;
+	/* background-color: orange; */
+	background-color: green;
+	transition: all 0.4s;
+}

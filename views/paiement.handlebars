@@ -1,8 +1,8 @@
 <div class='contenu-paiement'>
 	<div class='divGauche'>
 		<div class='vera'>
-			<img src='/images/veraaLogo.png' alt='logo veraPasta' />
-			<h1>VeraPasta</h1>
+			<img src='/images/logoVera2.png' alt='logo veraPasta' />
+			{{! <h1>VeraPasta</h1> }}
 		</div>
 		<div class='cordonnee'>
 			<p>Votre email </p>
@@ -14,6 +14,10 @@
 			<label>
 				{{! <input type='text' name='' id=''  placeholder='Appartement, suite, etc. optionnel' /> }}
 				<address id='infos_client'>{{info}}</address>
+			</label>
+			<p>Instructions Speciales</p>
+			<label for='instructions_speciales'>
+				<address id='instructions_speciales'>{{instructions_speciales}}</address>
 			</label>
 			<form action='/paiement' method='post' id='form_paiement' novalidate>
 				<h2>Paiement</h2>
@@ -30,6 +34,13 @@
 							<p>et plus...</p>
 						</div>
 					</div>
+					<label for='type_carte_credit'>
+						<select id='type_carte_credit' name='type_carte_credit'>
+							<option>Visa</option>
+							<option>Mastercard</option>
+							<option>PayPal</option>
+						</select>
+					</label>
 					<label for='numero-carte'>
 						<input type='text' name='numero_carte' id='numero-carte' placeholder='numero de la carte' required />
 						<p class='erreur' id='erreur_numero_carte'></p>
@@ -83,7 +94,7 @@
 				<div class='produitP'>
 					<div class='imgDescrip'>
 						<div>
-							<img src='/images/img_plats/c4.jpg' alt='image plat' />
+							<img src={{this.image_url}} alt='image plat' />
 							<p class='quantit'>{{this.quantite}}</p>
 							<div class='titreDescrip'>
 								<h3>{{this.nom}}</h3>

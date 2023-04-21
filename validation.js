@@ -1,4 +1,4 @@
-import {isClientExist} from'./model/client.model.js';
+import {isUtilisateurExist} from'./model/utilisateur.model.js';
 
 /**
  * Retourne une valeur indiquant si le ID en paramètre est valide.
@@ -40,10 +40,11 @@ export const isEmailValide = (email) => {
     return typeof email === 'string' && !!email &&
     email.match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
 }
-export const isEmailConfirm = async(email, emailConfirm) => {
-    let emailExist= await isClientExist(email);
-    return typeof email === 'string' && !!email && typeof emailConfirm === 'string' && !!emailConfirm && emailExist.lenght===0;
+export const isEmailConfirm = async(email) => {
+    let emailExist= await isUtilisateurExist(email);
+    return typeof email === 'string' && !!email && emailExist.length===0;
 }
+
 export const isPasswordValide = (password) => {
     return typeof password === 'string' && !!password;
 }
@@ -52,15 +53,9 @@ export const isPasswordValided = (password, passwordConfirm) => {
     passwordConfirm===password;
 }
 export const contactValide=(body)=>{
+    console.log(body);
     return  isTexteValide(body.nom) &&
             isTexteValide(body.prenom) &&
             isEmailValide(body.courriel) &&
-            isEmailConfirm(body.courriel, body.emailConfirm);
-}
-export const coursValide=(body)=>{
-    return  isTexteValide(body.nom) && 
-            isTexteValide(body.description) &&
-            isDateValide(body.dateDebut) &&
-            isQuantiteValide(body.nbCours) &&
-            isQuantiteValide(body.capacite);
+            isEmailConfirm(body.courriel);
 }

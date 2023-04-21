@@ -1,46 +1,126 @@
+{{#if type}}
 <div class="contenuAdmin">
     
     {{>admin_navigation}}
     <div class='tableaux'>
         <div class="titreComm">
-            <h1 >Menus</h1>
+            <h1 class="admin-h1" >Menus</h1>
         </div>
 
         <div class="tableau">
             <div class="titre">
                 <h3>ID</h3>
+                <h3>Image</h3>
                 <h3>Nom</h3>
                 <h3>Prix</h3>
-                <h3>Source</h3>
                 <h3>Description</h3>
-                <h3>Date</h3>
-                <h3>Action</h3>
+                <h3>Catégorie</h3>
+                <h3>Supprimer</h3>
+                <h3>Modifier</h3>
+                <h3>Ingrédients</h3>
             </div>
             {{#each menus}}
             <div class="contenuTable">
-                <p>{{this.id_menu}}</p>
-                <p>{{this.nom}}</p>
-                <p>{{this.prix}} $</p>
-                <p>{{this.image_url}}</p>
-                <p>{{this.description}}</p>
-                <p>{{this.created_at}}</p>
-                <button class="btn_supprimer" data-idplat={{this.id_menu}}>supprimer</button>
+                <p id="plat_id{{this.id_menu}}">{{this.id_menu}}</p>
+                <p><img src={{this.image_url}}></p>
+                <p id="plat_nom{{this.id_menu}}">{{this.nom}}</p>
+                <p id="plat_prix{{this.id_menu}}">{{this.prix}} $</p>
+                <p id="plat_description{{this.id_menu}}">{{this.description}}</p>
+                <p id="plat_description{{this.id_menu}}">{{this.Nom_categorie}}</p>
+                <button class="btn_supprimer" data-idplat={{this.id_menu}}>Supprimer</button>
+                <button class="btn_modifier" data-idplat={{this.id_menu}}>Modifier</button>
+                <button class="btn_ajout_ing" data-idplat={{this.id_menu}}>Ajouter Ingrédients</button>
             </div>
             {{/each}}
         </div>
     </div>
     <div class='form'>
         <h2>Ajouter un plat</h2>
-        <form action='/ajouterUnPlat' method="post">
-            <input type='text' id='nom' name="nom" placeholder='Nom' required/>
-
-            <input type="file" name="image_url" accept="image/*" required>
-
-            <textarea name="description" id="description" placeholder="Description" required></textarea>
+        <form action='/ajouterUnPlat' method="post" novalidate id="form_ajouter_menu">
+            <label for="nom_a">
+                Nom:
+                <input type='text' id='nom_a'  placeholder='Nom' required/>
+            </label>
+            <label for="image_url_a">
+                Selectionner l'image:
+                <input type="file" id="image_url_a" accept="image/*" required>
+            </label>
             
-            <input type='number' id='prix' min="0" name="prix" placeholder='Prix' minlength="0" required />
-
+            <label for="description_a">
+                Description:
+                <textarea  id="description_a" placeholder="Description" required></textarea>    
+            </label>
+            <label for="prix_a">
+                Prix:
+                <input type='text' id='prix_a' placeholder='Prix'  required />
+            </label>
+            <label for="select1">
+                {{!-- <p>Choisir la Categorie</p> --}}
+                Choisir la Categorie
+                <select class="select1" id="select1">
+                    {{#each categories}}
+                    <option id="categori{{this.id_categorie_menu}}" value={{this.id_categorie_menu}} >{{this.nom}}</option>
+                    {{/each}}
+                </select>
+            </label>
+            <p class="erreur" id="erreur_prix_a"></p>
             <input type='submit' value='Ajouter' />
         </form>
     </div>
+    <div class='form_update' id="form_update">
+        <img id="bouton_close" src="/images/close1.png" alt="icon close">
+        <h2>Mettre a jour le plat :<div id="nom_plat"></div> </h2>
+        <form  id="updatePlatForm" novalidate>
+            <label for="plat_nom_j">
+                Nom:
+                <input type='text' id="plat_nom_j"  placeholder='Nom' required/>
+            </label>
+            <label for="plat_prix_j">
+                Prix:
+                <input type='text' id="plat_prix_j" min="0" placeholder='Prix' minlength="0" required />
+            </label>
+            
+            <p class="erreur" id="erreur_prix_j"></p>
+            <label for="select2">
+                Choisir la categorie:
+                <select class="select2" id="select2">
+                {{#each categories}}
+                <option id="categorie{{this.id_categorie_menu}}" value={{this.id_categorie_menu}} >{{this.nom}}</option>
+                {{/each}}
+            </select>
+            </label>
+            <label for="plat_img_j">
+                Selectionner l'image du plat:
+                <input type="file" id="plat_img_j" name="image_url" accept="image/*" required>
+            </label>
+            
+
+            <input type="hidden" id="plat_idPlat_j">
+            <label for="plat_description_j">
+                Description:
+                <textarea id="plat_description_j" placeholder="Description" required></textarea>
+            </label>
+            
+
+            <input id="plat_j_submit"  type="button" value="Modifier">
+        </form>
+    </div>
+    <div class='form_ingred' id="form_ingred">
+        <img id="bouton_close_ingred" src="/images/close1.png" alt="icon close">
+        <h2 >Ajouter un ingrédient pour :<div id="nom_ingred"></div> </h2>
+        <form action="ajouerIngredient"  id="ajoutIngredForm" novalidate>
+            <label for="ingred_nom">
+                Nom:
+                <input type='text' id="ingred_nom"  placeholder='Nom ingrédient' required/>
+            </label>
+                <input type="hidden" id="Ingred_idPlat">
+            <label for="Ingred_description">
+                Description:
+                <textarea id="Ingred_description" placeholder="Description ingrédient"></textarea>
+            </label>
+            
+            <input id="ingred_submit"  type="button" value="Ajouter">
+        </form>
+    </div>
 </div>
+{{/if}}

@@ -1,8 +1,8 @@
 <div class='contenu-paiement'>
 	<div class='divGauche'>
 		<div class='vera'>
-			<img src='/images/veraaLogo.png' alt='logo veraPasta' />
-			<h1>VeraPasta</h1>
+			<img src='/images/logoVera2.png' alt='logo veraPasta' />
+			{{! <h1>VeraPasta</h1> }}
 		</div>
 		<div class='cordonnee'>
 			<form action='/information' id='form_infos' method='post' novalidate>
@@ -37,7 +37,6 @@
 								<option>Montréal</option>
 								<option>Ottawa</option>
 								<option>Gatineau</option>
-								{{! <option value=''>Ottawa</option> }}
 							</select>
 						</label>
 					</div>
@@ -47,6 +46,10 @@
 					<input type='number' name='telephone' id='Téléphone' placeholder='Téléphone' required />
 				</label>
 				<p class='erreur hidden' id='erreurTelephone'></p>
+				<div class='instructions_speciales'>Instructions speciales (Facultative)</div>
+				<label for='instructions_speciales'>
+					<textarea name='instructions_speciales' id='instructions_speciales'></textarea>
+				</label>
 				<div class='basform'>
 					<a href='/panier'>
 						<div class='retour'>

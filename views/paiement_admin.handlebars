@@ -1,0 +1,37 @@
+{{#if type}}
+<div class="contenuAdmin">
+    
+    {{>admin_navigation}}
+
+    <div class='tableaux'>
+        <div class="titreComm">
+            <h1 class="admin-h1">{{titre}}</h1>
+        </div>
+        <div class="tableau">
+            <div class="titre">
+                <h3>N°</h3>
+                <h3>Nom</h3>
+                <h3>Prénom</h3>
+                <h3>Montant</h3>
+                <h3>Numéro de carte</h3>
+                <h3>Nom du titulaire de la carte</h3>
+                <h3>Date du paiement</h3>
+            </div>
+            {{#each paiements}}
+            <div class="contenuTable">
+                <p>{{this.id_paiement}}</p>
+                <p>{{this.nom}}</p>
+                <p>{{this.prenom}}</p>
+                <p>{{this.montant}} $</p>
+                {{!-- <p>{{this.adresse_livraison}}</p> --}}
+                <p>{{this.numero_carte_credit}}</p>
+                <p>{{this.nom_titulaire_carte}}</p>
+                <p>{{this.date_paiement}}</p>
+                {{!-- <button>supprimer</button> --}}
+            </div>
+            {{/each}}
+        </div>
+    </div>
+
+</div>
+{{/if}}

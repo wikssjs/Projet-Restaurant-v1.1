@@ -1,9 +1,7 @@
 import passport from 'passport';
 import { Strategy } from 'passport-local';
-import pkg from 'bcryptjs';
+import { compare } from 'bcrypt';
 import { getClientByEmail } from './model/requetes.js';
-
-const { compare } = pkg;
 
 let config = {
     usernameField: 'emailClient',
@@ -17,7 +15,7 @@ passport.use(new Strategy(config, async (emailClient, motDePasseClient, done) =>
         if(!utilisateur) {
             return done(null, false, {erreur: 'erreur_courriel_utilisateur'});
         }
-        let valide = await compare(motDePasseClient, utilisateur.password);
+        let valide = await compare(motDePasseClient, utilisateur.mot_de_passe);
         if(!valide) {
             return done(null, false, {erreur: 'erreur_mot_de_passe'})
         }

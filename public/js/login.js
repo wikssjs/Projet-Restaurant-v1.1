@@ -46,17 +46,44 @@ formAuth.addEventListener('submit', async (event) => {
 
 	if (response.ok) {
 		window.location.replace('/home');
+		localStorage.setItem('showNotification', 'Bienvenu à VeraPasta!');
 	} 
 	else if (response.status === 401) {
-		erreurMotDePasse.innerText = "Le mot de passe n'est pas correcte.";
-		erreurMotDePasse.classList.remove('hidden');
-		// window.location.replace('/');
+		// erreurCourriel.innerText = "Votre email n'est pas correcte.";
+		// erreurCourriel.classList.remove('hidden');
+		showAlert("L'email ou le mot de passe n'est pas correcte. Veillez ressayer");
 
 	} 
-	else if (response.status === 409) {
-		erreurCourriel.innerText = 'Le email est inconnu.';
-		erreurCourriel.classList.remove('hidden');
-	} else {
+	else if (response.status === 400) {
+		erreurMotDePasse.innerText = "Votre mot de passe n'est pas correcte.";
+		erreurMotDePasse.classList.remove('hidden');
+		showAlert("Votre mot de passe n'est pas correcte. Veillez ressayer");
+
+	} 
+
+	else {
 		console.log('Autre erreur');
 	}
 });
+
+const checkNotification = () => {
+    const message = localStorage.getItem('showNotification');
+    if (message) {
+        localStorage.removeItem('showNotification');
+        showAlert(message);
+    }
+};
+
+const showAlert = (message) => {
+    let popupAlert = document.getElementById('alerte');
+    let notification = document.querySelector('.alert_container');
+    notification.style.display = 'flex';
+    popupAlert.innerText = message;
+
+    setTimeout(() => {
+        notification.style.display = 'none';
+    }, 5000);
+};
+
+
+checkNotification();

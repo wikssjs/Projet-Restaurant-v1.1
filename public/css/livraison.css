@@ -27,6 +27,10 @@ form {
 	align-items: center;
 	flex-direction: column;
 }
+.vera img {
+	width: 400px;
+	margin-bottom: 30px;
+}
 .vera h1 {
 	font-size: 3rem;
 	margin: 16px 0;

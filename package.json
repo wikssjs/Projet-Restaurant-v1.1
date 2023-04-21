@@ -6,12 +6,13 @@
 	"main": "server.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"start": "node server.js"
+		"start": "nodemon server.js"
 	},
 	"author": "Vezely kante",
 	"license": "ISC",
 	"dependencies": {
-		"bcryptjs": "^2.4.3",
+		"animate.css": "^4.1.1",
+		"bcrypt": "^5.1.0",
 		"compression": "^1.7.4",
 		"cors": "^2.8.5",
 		"dotenv": "^16.0.3",
@@ -24,6 +25,6 @@
 		"passport": "^0.6.0",
 		"passport-local": "^1.0.0",
 		"sqlite": "^4.1.2",
-		"sqlite3": "^5.1.6"
+		"sqlite3": "^5.1.4"
 	}
 }

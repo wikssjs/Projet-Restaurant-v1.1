@@ -22,6 +22,9 @@ let erreur_commentaire= document.getElementById('erreur_commentaire');
 let btnform = document.querySelector('.commentaire')
 let commentaireForm = document.querySelector('.modePaye form')
 let btnFormNote = document.querySelector('.Note_client')
+// let btnIngredient = document.querySelector('.titleIngh3');
+// let listIngre = document.querySelector('.listIngre');
+// let basFlech = document.querySelector('.basFlech');
 let contenu_form_note = document.querySelector('.contenu_form_note')
 let bas = document.querySelector('.bas');
 
@@ -86,19 +89,28 @@ if (btnFormNote) {
     btnFormNote.addEventListener('click', ()=>{
         contenu_form_note.classList.toggle('activeFormNote')
         contenu_form_note.style.transition='all 0.4s';
-
         if (contenu_form_note.classList.contains('activeFormNote')) {
             bas.style.transform='rotate(180deg)';
             bas.style.transition='all 0.4s';
         }else{
             bas.style.transform='rotate(360deg)';
             bas.style.transition='all 0.4s';
-
-
         }
-        // transform: rotate(180deg);
     })
 }
+// if (btnIngredient) {
+//     btnIngredient.addEventListener('click', ()=>{
+//         listIngre.classList.toggle('activeIngredient')
+//         listIngre.style.transition='all 0.4s';
+//         if (listIngre.classList.contains('activeFormNote')) {
+//             basFlech.style.transform='rotate(180deg)';
+//             basFlech.style.transition='all 0.4s';
+//         }else{
+//             basFlech.style.transform='rotate(360deg)';
+//             basFlech.style.transition='all 0.4s';
+//         }
+//     })
+// }
 
 const addCommentaire = async(event) => {
     event.preventDefault();
@@ -110,7 +122,7 @@ const addCommentaire = async(event) => {
     let data = {
         id_menu: event.currentTarget.dataset.idmenu,
         commentaire: commentaireClient.value,
-        nom_commentataire: inputNomCommantataire.value,
+        nom_utilisateur: inputNomCommantataire.value,
         email: inputEmailCommantataire.value,
 
     }
@@ -122,6 +134,7 @@ const addCommentaire = async(event) => {
     });
 	if (response.ok) {
 		window.location.reload();
+        localStorage.setItem('showNotification', 'Merci pour votre commentaire!');
 	}
 }
 
@@ -133,7 +146,7 @@ const addNote = async(event) => {
 	}
     let data = {
         id_menu: event.currentTarget.dataset.idmenu,
-        note: Note.value,
+        nb_etoiles: Note.value,
     }
     console.log(event.currentTarget.dataset);
     let response = await fetch('/ajoute-note', {
@@ -143,6 +156,7 @@ const addNote = async(event) => {
     });
 	if (response.ok) {
 		window.location.reload();
+        localStorage.setItem('showNotification', 'Merci!');
 	}
 }
 
@@ -159,3 +173,23 @@ if (form_note) {
 }
 
 
+const checkNotification = () => {
+    const message = localStorage.getItem('showNotification');
+    if (message) {
+        localStorage.removeItem('showNotification');
+        showAlert(message);
+    }
+};
+
+const showAlert = (message) => {
+    let popupAlert = document.getElementById('alerte');
+    let notification = document.querySelector('.alert_container');
+    notification.style.display = 'flex';
+    popupAlert.innerText = message;
+
+    setTimeout(() => {
+        notification.style.display = 'none';
+    }, 5000);
+};
+
+checkNotification();

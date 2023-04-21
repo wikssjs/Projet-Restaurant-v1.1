@@ -17,11 +17,11 @@ section {
 	color: black;
 }
 form > img {
-	position: absolute;
+	/* position: absolute; */
 
-	width: 100px;
-	top: -25px;
-	left: -25px;
+	width: 190px;
+	/* top: -25px;
+	left: -25px; */
 }
 form {
 	background-color: white;
@@ -52,7 +52,7 @@ form input {
 }
 form label {
 	position: relative;
-	margin: 5px;
+	margin: 0 5px;
 }
 form label p {
 	position: absolute;

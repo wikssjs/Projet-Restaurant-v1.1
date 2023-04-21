@@ -1,0 +1,34 @@
+{{#if type}}
+<div class="contenuAdmin">
+    
+    {{>admin_navigation}}
+
+    <div class='tableaux'>
+        <div class="titreComm">
+            <h1 class="admin-h1">Utilisateurs</h1>
+        </div>
+        <div class="tableau">
+            <div class="titre">
+                <h3>Type</h3>
+                <h3>Nom</h3>
+                <h3>Email</h3>
+                <h3>Date de création</h3>
+                 <h3>Action</h3>
+            </div>
+            {{#each clients}}
+            <div class="contenuTable">
+                <p>{{this.type}}</p>
+                <p>{{this.nom}}</p>
+                <p>{{this.email}}</p>
+                <p>{{this.created_at}}</p>
+                <button class="btn_supp_utilisateur" data-idclient={{this.id_utilisateur}} >Supprimer</button>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+        
+
+    </div>
+
+</div>
+{{/if}}
